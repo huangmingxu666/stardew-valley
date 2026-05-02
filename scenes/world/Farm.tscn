@@ -29,11 +29,13 @@ tile_map_data = PackedByteArray("AAAnAAoABwAdAAEAAAAnAAsABwAeAAEAAAAeAAgABwAeAAM
 tile_set = ExtResource("1_umcpx")
 
 [node name="Player" parent="Prop" unique_id=519083797 instance=ExtResource("4_r6qdy")]
-position = Vector2(585, 304)
+position = Vector2(933, 538)
 
 [node name="Markers" type="Node2D" parent="." unique_id=1021360107]
+position = Vector2(755, 444)
 
 [node name="PlayerSpawn" type="Marker2D" parent="Markers" unique_id=1166649510]
+position = Vector2(178, 90)
 
 [node name="Gameplay" type="Node" parent="." unique_id=555620789]
 

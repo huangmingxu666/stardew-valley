@@ -14,13 +14,13 @@ class_name PlayerVisual
 func _ready() -> void:
 	tool_sprite.visible = false
 
-func show_idle(direction: StringName) -> void:
+func show_idle(direction: StringName, cycle_time: float = 0.0) -> void:
 	var clip: FrameAnimationClip = _get_clip(&"idle", direction)
 	if clip == null:
 		return
 
 	_apply_direction_flip(direction)
-	body_sprite.frame = clip.get_frame_at_index(0)
+	body_sprite.frame = clip.get_frame_at_time(cycle_time)
 
 func show_move(direction: StringName, cycle_time: float) -> void:
 	var clip: FrameAnimationClip = _get_clip(&"move", direction)

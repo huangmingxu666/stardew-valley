@@ -60,11 +60,11 @@ func stop_movement() -> void:
 	velocity = Vector2.ZERO
 	move_and_slide()
 
-func show_idle_frame() -> void:
+func show_idle_frame(cycle_time: float = 0.0) -> void:
 	if visual == null:
 		return
 
-	visual.show_idle(facing_direction)
+	visual.show_idle(facing_direction, cycle_time)
 
 func show_move_frame(cycle_time: float) -> void:
 	if visual == null:
