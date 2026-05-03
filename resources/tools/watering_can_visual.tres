@@ -1,0 +1,69 @@
+[gd_resource type="Resource" script_class="ToolVisualData" format=3 uid="uid://1i5mr6rymyce"]
+
+[ext_resource type="Script" uid="uid://pqlox02ofutl" path="res://scripts/player/ToolVisualData.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://bdaywho0s1xyf" path="res://assets/Player/Tools/Tool_Watering_Can.png" id="2"]
+[ext_resource type="Script" uid="uid://beak275xetulk" path="res://scripts/player/FrameAnimationClip.gd" id="3"]
+
+[sub_resource type="Resource" id="4"]
+script = ExtResource("3")
+start_frame = 322
+end_frame = 335
+fps = 10.0
+loop = false
+
+[sub_resource type="Resource" id="6"]
+script = ExtResource("3")
+start_frame = 280
+end_frame = 293
+fps = 10.0
+loop = false
+
+[sub_resource type="Resource" id="5"]
+script = ExtResource("3")
+start_frame = 294
+end_frame = 307
+fps = 10.0
+loop = false
+
+[sub_resource type="Resource" id="1"]
+script = ExtResource("3")
+start_frame = 154
+end_frame = 167
+fps = 10.0
+loop = false
+
+[sub_resource type="Resource" id="3"]
+script = ExtResource("3")
+start_frame = 112
+end_frame = 125
+fps = 10.0
+loop = false
+
+[sub_resource type="Resource" id="2"]
+script = ExtResource("3")
+start_frame = 126
+end_frame = 139
+fps = 10.0
+loop = false
+
+[resource]
+script = ExtResource("1")
+tool_id = &"watering_can"
+texture = ExtResource("2")
+hframes = 56
+vframes = 3
+use_down = SubResource("1")
+use_up = SubResource("2")
+use_side = SubResource("3")
+body_use_down = SubResource("4")
+body_use_up = SubResource("5")
+body_use_side = SubResource("6")
+offset_down = Vector2(0, -16)
+offset_up = Vector2(0, -20)
+offset_side = Vector2(0, -18)
+z_index_down = 2
+z_index_up = 0
+z_index_side = 2
+effect_frame_index_down = 3
+effect_frame_index_up = 3
+effect_frame_index_side = 3

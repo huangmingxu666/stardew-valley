@@ -1,0 +1,131 @@
+[gd_scene format=3 uid="uid://dw6hgg0tu8f17"]
+
+[ext_resource type="Texture2D" uid="uid://cv53uekm7lqjc" path="res://assets/Object/Building/Farmer_House/Japanese_Home_1_Layer_1_32x32.png" id="1_s2edq"]
+[ext_resource type="PackedScene" uid="uid://clv2hmtmkv4du" path="res://scenes/player/Player.tscn" id="3_lejw5"]
+[ext_resource type="Texture2D" uid="uid://btp1bb5yh0xyb" path="res://assets/Object/Building/Farmer_House/Japanese_Home_1_Layer_2_32x32.png" id="4_ho23j"]
+[ext_resource type="Script" uid="uid://bbxqp350pvrs2" path="res://scripts/world/SceneSpawnController.gd" id="5_qpsik"]
+[ext_resource type="Script" uid="uid://bhiyx72nay5rp" path="res://scripts/objects/SceneExitArea.gd" id="6_k8n0r"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_top"]
+size = Vector2(608, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2i55x"]
+size = Vector2(562.30493, 51.573296)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s2edq"]
+size = Vector2(562.30493, 56.261784)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lejw5"]
+size = Vector2(562.3047, 18.753925)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ho23j"]
+size = Vector2(2811.5251, 18.75392)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yqpat"]
+size = Vector2(1124.6097, 18.753918)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_left"]
+size = Vector2(32, 428)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_right"]
+size = Vector2(32, 428)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bottom_left"]
+size = Vector2(128, 84)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bottom_right"]
+size = Vector2(352, 84)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qpsik"]
+size = Vector2(38.64072, 8.2842865)
+
+[node name="FarmerHouseInterior" type="Node2D" unique_id=1083391302]
+
+[node name="Backdrop" type="Polygon2D" parent="." unique_id=53148778]
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-1024, -1024, 1632, -1024, 1632, 1452, -1024, 1452)
+
+[node name="InteriorBase" type="Sprite2D" parent="." unique_id=489599884]
+texture_filter = 1
+texture = ExtResource("1_s2edq")
+centered = false
+
+[node name="Player" parent="." unique_id=332566795 instance=ExtResource("3_lejw5")]
+position = Vector2(192, 328)
+
+[node name="InteriorOverlay" type="Sprite2D" parent="." unique_id=1228423102]
+visible = false
+texture_filter = 1
+texture = ExtResource("4_ho23j")
+centered = false
+
+[node name="Markers" type="Node2D" parent="." unique_id=478997637]
+
+[node name="EntranceSpawn" type="Marker2D" parent="Markers" unique_id=1484097431]
+position = Vector2(192, 384)
+
+[node name="SpawnController" type="Node" parent="." unique_id=1155320340]
+script = ExtResource("5_qpsik")
+player_path = NodePath("../Player")
+default_spawn_path = NodePath("../Markers/EntranceSpawn")
+spawn_markers_root_path = NodePath("../Markers")
+
+[node name="Boudary" type="Node2D" parent="." unique_id=1061623260]
+
+[node name="Boundaries" type="StaticBody2D" parent="Boudary" unique_id=1291923767]
+
+[node name="TopWall" type="CollisionShape2D" parent="Boudary/Boundaries" unique_id=1239205524]
+position = Vector2(304, 20)
+shape = SubResource("RectangleShape2D_top")
+
+[node name="Wall" type="CollisionShape2D" parent="Boudary/Boundaries" unique_id=150777144]
+position = Vector2(367.99997, 52)
+scale = Vector2(0.05690861, 1.7063094)
+shape = SubResource("RectangleShape2D_2i55x")
+
+[node name="Wall2" type="CollisionShape2D" parent="Boudary/Boundaries" unique_id=1033228251]
+position = Vector2(368, 208)
+scale = Vector2(0.05690861, 1.7063094)
+shape = SubResource("RectangleShape2D_s2edq")
+
+[node name="Wall4" type="CollisionShape2D" parent="Boudary/Boundaries" unique_id=1042389118]
+position = Vector2(336, 176)
+scale = Vector2(0.05690861, 1.7063094)
+shape = SubResource("RectangleShape2D_lejw5")
+
+[node name="Wall5" type="CollisionShape2D" parent="Boudary/Boundaries" unique_id=254179661]
+position = Vector2(112.00001, 176)
+scale = Vector2(0.05690861, 1.7063094)
+shape = SubResource("RectangleShape2D_ho23j")
+
+[node name="Wall3" type="CollisionShape2D" parent="Boudary/Boundaries" unique_id=1050973752]
+position = Vector2(416, 240.00002)
+scale = Vector2(0.05690861, 1.7063094)
+shape = SubResource("RectangleShape2D_yqpat")
+
+[node name="LeftWall" type="CollisionShape2D" parent="Boudary/Boundaries" unique_id=410344453]
+position = Vector2(16, 214)
+shape = SubResource("RectangleShape2D_left")
+
+[node name="RightWall" type="CollisionShape2D" parent="Boudary/Boundaries" unique_id=765802040]
+position = Vector2(592, 214)
+shape = SubResource("RectangleShape2D_right")
+
+[node name="BottomLeftWall" type="CollisionShape2D" parent="Boudary/Boundaries" unique_id=1680953238]
+position = Vector2(64, 386)
+shape = SubResource("RectangleShape2D_bottom_left")
+
+[node name="BottomRightWall" type="CollisionShape2D" parent="Boudary/Boundaries" unique_id=595829923]
+position = Vector2(432, 386)
+shape = SubResource("RectangleShape2D_bottom_right")
+
+[node name="LeaveArea" type="Area2D" parent="Boudary" unique_id=1360912732]
+collision_layer = 0
+script = ExtResource("6_k8n0r")
+destination_scene_path = "res://scenes/world/Farm.tscn"
+destination_spawn_marker = &"HouseExteriorSpawn"
+
+[node name="LeaveCollision" type="CollisionShape2D" parent="Boudary/LeaveArea" unique_id=112962763]
+position = Vector2(191.83838, 421.9104)
+scale = Vector2(1.6646492, 2.4358356)
+shape = SubResource("RectangleShape2D_qpsik")

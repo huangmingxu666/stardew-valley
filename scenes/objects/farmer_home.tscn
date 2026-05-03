@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://c0splk453sbw8"]
+
+[ext_resource type="Texture2D" uid="uid://b1i0eoxlpx0r7" path="res://assets/Object/Building/Farmer_House/Farmer_House_1_32x32.png" id="1_house"]
+[ext_resource type="PackedScene" uid="uid://b574y81lbh18o" path="res://scenes/objects/Door.tscn" id="2_door"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
+size = Vector2(189.26955, 80.73508)
+
+[node name="Farmer_Home" type="Node2D" unique_id=539166018]
+
+[node name="HouseSprite" type="Sprite2D" parent="." unique_id=236289852]
+texture_filter = 1
+position = Vector2(-128, -320)
+texture = ExtResource("1_house")
+centered = false
+
+[node name="Door" parent="." unique_id=174039238 instance=ExtResource("2_door")]
+position = Vector2(48, -32)
+destination_scene_path = "res://scenes/objects/FarmerHouseInterior.tscn"
+destination_spawn_marker = &"EntranceSpawn"
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=2053721045]
+position = Vector2(0, -8)
+scale = Vector2(1.2257651, 1.0899848)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1358187110]
+position = Vector2(3.2632675, -40.36754)
+shape = SubResource("RectangleShape2D_body")

@@ -18,6 +18,9 @@ func physics_update(delta: float) -> void:
 		return
 
 	handle_shared_actions()
+	if player_ref.consume_tool_use_requested() and player_ref.has_selected_tool():
+		transitioned.emit(&"ToolUse")
+		return
 
 	if player_ref.has_movement_input():
 		transitioned.emit(&"Move")

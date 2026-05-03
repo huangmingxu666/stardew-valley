@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="ToolData" load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/ToolData.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/Player/Tools/Tool_Shovel.png" id="2"]
+[ext_resource type="Resource" path="res://resources/tools/shovel_visual.tres" id="3"]
+
+[resource]
+script = ExtResource("1")
+id = &"shovel"
+display_name = "Shovel"
+description = "Prototype tilling tool. Currently mapped to the default soil-tilling action for the farm prototype."
+tool_kind = 2
+primary_action = 2
+slot_index = 2
+icon_texture = ExtResource("2")
+use_texture = ExtResource("2")
+visual_data = ExtResource("3")
+interaction_distance = 32.0
+targets_tiles = true

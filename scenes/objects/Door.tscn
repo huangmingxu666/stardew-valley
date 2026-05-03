@@ -1,3 +1,28 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://b574y81lbh18o"]
 
-[node name="Door" type="Node2D"]
+[ext_resource type="Script" uid="uid://cyjv7l3kpx3a6" path="res://scripts/objects/Door.gd" id="1_door"]
+[ext_resource type="Texture2D" uid="uid://5xjwbxmnhleu" path="res://assets/Object/Building/Farmer_House/Farm_House_Door_32x32.png" id="2_sheet"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_probe"]
+size = Vector2(32, 56)
+
+[node name="Door" type="Area2D" unique_id=1672819996]
+y_sort_enabled = true
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("1_door")
+frame_count = 14
+open_frame = 7
+interaction_prompt = "Enter"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=288516390]
+position = Vector2(0, -4)
+shape = SubResource("RectangleShape2D_probe")
+
+[node name="DoorSprite" type="Sprite2D" parent="." unique_id=1075404011]
+texture_filter = 1
+position = Vector2(-16, -32)
+texture = ExtResource("2_sheet")
+centered = false
+hframes = 14
+frame = 7

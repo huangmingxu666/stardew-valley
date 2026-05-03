@@ -6,20 +6,25 @@ signal facing_changed(direction: StringName)
 @export var move_speed: float = 92.0
 @export var tile_size: int = 32
 @export var debug_draw_target_tile: bool = true
+@export_range(0.0, 1.0, 0.01) var target_tile_advance_ratio: float = 0.33
 @export var input_up_action: StringName = &"up"
 @export var input_down_action: StringName = &"down"
 @export var input_left_action: StringName = &"left"
 @export var input_right_action: StringName = &"right"
 @export var interact_action: StringName = &"ui_accept"
+@export var use_left_action: StringName = &"use_left"
 
 var move_input: Vector2 = Vector2.ZERO
 var facing_vector: Vector2 = Vector2.DOWN
 var facing_direction: StringName = &"down"
+var facing_locked: bool = false
 var pressed_order: Array[StringName] = []
 var interact_requested: bool = false
+var tool_use_requested: bool = false
 
 @onready var visual: PlayerVisual = $Visual
 @onready var interactor: PlayerInteractor = $PlayerInteractor
+@onready var tool_controller: ToolController = $ToolController
 @onready var state_machine: PlayerStateMachine = $StateMachine
 
 func _ready() -> void:
@@ -36,6 +41,11 @@ func _input(event: InputEvent) -> void:
 
 	if interact_action != &"" and event.is_action_pressed(interact_action, false, true):
 		interact_requested = true
+	if use_left_action != &"" and event.is_action_pressed(use_left_action, false, true) and has_selected_tool() and not is_tool_use_locked():
+		tool_use_requested = true
+
+	if tool_controller != null:
+		tool_controller.handle_input(event)
 
 func _physics_process(delta: float) -> void:
 	_refresh_input_state()
@@ -72,6 +82,50 @@ func show_move_frame(cycle_time: float) -> void:
 
 	visual.show_move(facing_direction, cycle_time)
 
+func show_tool_body_frame(cycle_time: float) -> void:
+	if visual == null:
+		return
+
+	visual.show_tool_body(facing_direction, cycle_time)
+
+func set_selected_tool_data(tool_data: ToolData) -> void:
+	if visual == null:
+		return
+
+	visual.set_tool_data(tool_data)
+
+func get_selected_tool_data() -> ToolData:
+	if tool_controller == null:
+		return null
+
+	return tool_controller.get_selected_tool_data()
+
+func try_use_current_tool() -> bool:
+	if tool_controller == null:
+		return false
+
+	return tool_controller.use_current_tool()
+
+func consume_tool_use_requested() -> bool:
+	var requested: bool = tool_use_requested
+	tool_use_requested = false
+	return requested
+
+func has_selected_tool() -> bool:
+	return get_selected_tool_data() != null
+
+func lock_facing() -> void:
+	facing_locked = true
+
+func unlock_facing() -> void:
+	facing_locked = false
+
+func is_tool_use_locked() -> bool:
+	if state_machine == null or state_machine.current_state == null:
+		return false
+
+	return state_machine.current_state is PlayerToolUseState
+
 func consume_interact_requested() -> bool:
 	var requested: bool = interact_requested
 	interact_requested = false
@@ -83,11 +137,42 @@ func try_interact() -> bool:
 
 	return interactor.try_interact(self)
 
+func show_tool_use_frame(cycle_time: float) -> void:
+	if visual == null:
+		return
+
+	visual.show_tool_use(facing_direction, cycle_time)
+
+func hide_tool_frame() -> void:
+	if visual == null:
+		return
+
+	visual.hide_tool()
+
+func get_current_tool_use_duration() -> float:
+	if visual == null:
+		return 0.0
+
+	return visual.get_tool_use_duration(facing_direction)
+
+func get_current_tool_effect_time() -> float:
+	if visual == null:
+		return 0.0
+
+	return visual.get_tool_effect_time(facing_direction)
+
 func get_interaction_position(distance: float) -> Vector2:
 	return global_position + (facing_vector * distance)
 
+func get_target_world_position_at_distance(distance: float) -> Vector2:
+	var sample_distance: float = _get_target_sample_distance(distance)
+	return get_interaction_position(sample_distance)
+
 func get_target_tile() -> Vector2i:
-	var target_world: Vector2 = get_interaction_position(float(tile_size))
+	return get_target_tile_at_distance(float(tile_size))
+
+func get_target_tile_at_distance(distance: float) -> Vector2i:
+	var target_world: Vector2 = get_target_world_position_at_distance(distance)
 	return Vector2i(
 		int(floor(target_world.x / float(tile_size))),
 		int(floor(target_world.y / float(tile_size)))
@@ -113,6 +198,9 @@ func _refresh_input_state() -> void:
 	_update_facing_from_pressed_order()
 
 func _update_facing_from_pressed_order() -> void:
+	if facing_locked:
+		return
+
 	var last_action: StringName = &""
 	for index: int in range(pressed_order.size() - 1, -1, -1):
 		var candidate: StringName = pressed_order[index]
@@ -164,3 +252,7 @@ func _get_move_actions() -> Array[StringName]:
 		input_up_action,
 		input_down_action,
 	]
+
+func _get_target_sample_distance(distance: float) -> float:
+	var advance_offset: float = float(tile_size) * target_tile_advance_ratio
+	return maxf(distance - advance_offset, 0.0)

@@ -1,14 +1,20 @@
 [gd_scene format=3 uid="uid://clv2hmtmkv4du"]
 
 [ext_resource type="Script" uid="uid://dgxeha5xw4y4j" path="res://scripts/player/PlayerController.gd" id="1"]
-[ext_resource type="Texture2D" uid="uid://64paohfhi7e8" path="res://assets/Player/test.png" id="2"]
+[ext_resource type="Texture2D" uid="uid://64paohfhi7e8" path="res://assets/Player/Player/test.png" id="2"]
 [ext_resource type="Script" uid="uid://ca5uwdijj73cs" path="res://scripts/player/PlayerInteractor.gd" id="3"]
 [ext_resource type="Script" uid="uid://iq2mv3chsfhr" path="res://scripts/player/ToolController.gd" id="4"]
 [ext_resource type="Script" uid="uid://dlr27uoth00ad" path="res://scripts/player/state_machine/PlayerStateMachine.gd" id="5"]
 [ext_resource type="Script" uid="uid://bdfpqmjyn4evo" path="res://scripts/player/state_machine/PlayerIdleState.gd" id="6"]
 [ext_resource type="Script" uid="uid://duqnmq5i1rfwm" path="res://scripts/player/state_machine/PlayerMoveState.gd" id="7"]
+[ext_resource type="Script" uid="uid://duotyaeypj7ci" path="res://scripts/data/ToolData.gd" id="7_rn7t0"]
 [ext_resource type="Script" uid="uid://7akfb1gj4vh3" path="res://scripts/player/PlayerVisual.gd" id="8"]
 [ext_resource type="Script" uid="uid://beak275xetulk" path="res://scripts/player/FrameAnimationClip.gd" id="9"]
+[ext_resource type="Script" uid="uid://2j5defyg5ikr" path="res://scripts/player/state_machine/PlayerToolUseState.gd" id="10"]
+[ext_resource type="Resource" uid="uid://ba1ssn4378u67" path="res://resources/tools/axe.tres" id="11"]
+[ext_resource type="Resource" path="res://resources/tools/fishing_rod.tres" id="12"]
+[ext_resource type="Resource" path="res://resources/tools/shovel.tres" id="13"]
+[ext_resource type="Resource" uid="uid://bs0lvouyhisip" path="res://resources/tools/watering_can.tres" id="14"]
 
 [sub_resource type="CapsuleShape2D" id="1"]
 radius = 8.0
@@ -44,13 +50,36 @@ script = ExtResource("9")
 start_frame = 112
 end_frame = 117
 
+[sub_resource type="Resource" id="10"]
+script = ExtResource("9")
+start_frame = 578
+end_frame = 583
+fps = 10.0
+loop = false
+
+[sub_resource type="Resource" id="11"]
+script = ExtResource("9")
+start_frame = 566
+end_frame = 571
+fps = 10.0
+loop = false
+
+[sub_resource type="Resource" id="12"]
+script = ExtResource("9")
+start_frame = 560
+end_frame = 565
+fps = 10.0
+loop = false
+
 [sub_resource type="CircleShape2D" id="2"]
 
 [node name="Player" type="CharacterBody2D" unique_id=45148260]
 script = ExtResource("1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=176051275]
+visible = false
 position = Vector2(0, -14)
+scale = Vector2(1.4652984, 1.4652984)
 shape = SubResource("1")
 
 [node name="Visual" type="Node2D" parent="." unique_id=1945007]
@@ -61,19 +90,25 @@ body_idle_side = SubResource("5")
 body_move_down = SubResource("6")
 body_move_up = SubResource("7")
 body_move_side = SubResource("8")
+body_tool_use_down = SubResource("10")
+body_tool_use_up = SubResource("11")
+body_tool_use_side = SubResource("12")
 
 [node name="BodySprite" type="Sprite2D" parent="Visual" unique_id=705972877]
+z_index = 1
 texture_filter = 1
 position = Vector2(0, -32)
 texture = ExtResource("2")
 hframes = 56
 vframes = 11
-frame = 130
+frame = 322
 
 [node name="ToolSprite" type="Sprite2D" parent="Visual" unique_id=1298926704]
-visible = false
 texture_filter = 1
-position = Vector2(0, -32)
+position = Vector2(0, -13)
+hframes = 56
+vframes = 3
+frame = 154
 
 [node name="PlayerInteractor" type="Node2D" parent="." unique_id=2024138809]
 script = ExtResource("3")
@@ -105,6 +140,7 @@ zoom = Vector2(2, 2)
 
 [node name="ToolController" type="Node" parent="." unique_id=1405906045]
 script = ExtResource("4")
+tool_definitions = Array[ExtResource("7_rn7t0")]([ExtResource("11"), ExtResource("12"), ExtResource("13"), ExtResource("14")])
 
 [node name="StateMachine" type="Node" parent="." unique_id=1057079725]
 script = ExtResource("5")
@@ -115,3 +151,6 @@ script = ExtResource("6")
 
 [node name="Move" type="Node" parent="StateMachine" unique_id=1388811231]
 script = ExtResource("7")
+
+[node name="ToolUse" type="Node" parent="StateMachine" unique_id=2122871675]
+script = ExtResource("10")

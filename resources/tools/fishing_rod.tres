@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="ToolData" load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/ToolData.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/Player/Tools/Tool_Fishing_Rod.png" id="2"]
+[ext_resource type="Resource" path="res://resources/tools/fishing_rod_visual.tres" id="3"]
+
+[resource]
+script = ExtResource("1")
+id = &"fishing_rod"
+display_name = "Fishing Rod"
+description = "Prototype fishing rod data. Registered for hotbar selection and later fishing-system hookup."
+tool_kind = 4
+primary_action = 4
+slot_index = 1
+icon_texture = ExtResource("2")
+use_texture = ExtResource("2")
+visual_data = ExtResource("3")
+interaction_distance = 48.0
+targets_tiles = false
