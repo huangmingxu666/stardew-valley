@@ -1,3 +1,170 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://dhoueiyjv0w17"]
 
-[node name="InventoryPanel" type="Control"]
+[ext_resource type="Texture2D" uid="uid://cbnoo6vyougor" path="res://assets/UI/Modern_UI_Style_1_32x32.png" id="1_2whm2"]
+[ext_resource type="Theme" uid="uid://22qpd6ligg50" path="res://resources/ui/ui_theme.tres" id="2_43dwb"]
+[ext_resource type="Script" uid="uid://dqov3kguueltr" path="res://scripts/ui/InventoryPanel.gd" id="3_5gdb0"]
+[ext_resource type="PackedScene" uid="uid://mq0vf6h5khlf" path="res://scenes/ui/backpack.tscn" id="3_43dwb"]
+[ext_resource type="Texture2D" uid="uid://64paohfhi7e8" path="res://assets/Player/Player/test.png" id="4_68fcl"]
+[ext_resource type="PackedScene" uid="uid://ccbic11c6ixkw" path="res://scenes/ui/PlayerCustomization.tscn" id="4_custom"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wtiy8"]
+atlas = ExtResource("1_2whm2")
+region = Rect2(16, 16, 64, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sii1i"]
+atlas = ExtResource("1_2whm2")
+region = Rect2(16, 16, 64, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_43dwb"]
+atlas = ExtResource("4_68fcl")
+region = Rect2(96, 16, 32, 48)
+
+[node name="InventoryPanel" type="Control" unique_id=1931106429]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_43dwb")
+script = ExtResource("3_5gdb0")
+
+[node name="Backpack" parent="." unique_id=1180033002 instance=ExtResource("3_43dwb")]
+layout_mode = 1
+anchors_preset = 7
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -220.0
+offset_bottom = -10.0
+grow_vertical = 0
+texture = SubResource("AtlasTexture_wtiy8")
+
+[node name="Character_and_Information" type="NinePatchRect" parent="." unique_id=680051557]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -325.0
+offset_top = -20.0
+offset_right = 325.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_sii1i")
+region_rect = Rect2(0, 0, 64, 62)
+patch_margin_left = 16
+patch_margin_top = 14
+patch_margin_right = 14
+patch_margin_bottom = 10
+
+[node name="Character" type="NinePatchRect" parent="Character_and_Information" unique_id=1826696135]
+layout_mode = 1
+offset_right = 18.0
+offset_bottom = 40.0
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Character_and_Information/Character" unique_id=240459071]
+layout_mode = 0
+offset_left = 25.0
+offset_top = 25.0
+offset_right = 275.0
+offset_bottom = 226.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Character_and_Information/Character/VBoxContainer" unique_id=1384913400]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Character_and_Information/Character/VBoxContainer/HBoxContainer" unique_id=1279523027]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 6
+
+[node name="HeadSlot" parent="Character_and_Information/Character/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=870742854 instance=ExtResource("4_custom")]
+layout_mode = 2
+slot_id = &"head"
+
+[node name="TopSlot" parent="Character_and_Information/Character/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=419870564 instance=ExtResource("4_custom")]
+layout_mode = 2
+slot_id = &"top"
+
+[node name="AccessorySlot" parent="Character_and_Information/Character/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=2019604716 instance=ExtResource("4_custom")]
+layout_mode = 2
+slot_id = &"accessory"
+
+[node name="TextureRect" type="TextureRect" parent="Character_and_Information/Character/VBoxContainer/HBoxContainer" unique_id=1890254708]
+custom_minimum_size = Vector2(80, 70)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = SubResource("AtlasTexture_43dwb")
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="Character_and_Information/Character/VBoxContainer/HBoxContainer" unique_id=2133044299]
+custom_minimum_size = Vector2(56, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+theme_override_constants/separation = 6
+
+[node name="HandSlot" parent="Character_and_Information/Character/VBoxContainer/HBoxContainer/VBoxContainer3" unique_id=1426315652 instance=ExtResource("4_custom")]
+layout_mode = 2
+slot_id = &"hands"
+
+[node name="BottomSlot" parent="Character_and_Information/Character/VBoxContainer/HBoxContainer/VBoxContainer3" unique_id=941526852 instance=ExtResource("4_custom")]
+layout_mode = 2
+slot_id = &"bottom"
+
+[node name="ShoesSlot" parent="Character_and_Information/Character/VBoxContainer/HBoxContainer/VBoxContainer3" unique_id=1019050377 instance=ExtResource("4_custom")]
+layout_mode = 2
+slot_id = &"shoes"
+
+[node name="Player_name" type="Label" parent="Character_and_Information/Character/VBoxContainer" unique_id=1151843788]
+layout_mode = 2
+size_flags_vertical = 8
+text = "黄明旭"
+horizontal_alignment = 1
+
+[node name="Information" type="NinePatchRect" parent="Character_and_Information" unique_id=1327450099]
+layout_mode = 1
+offset_right = 18.0
+offset_bottom = 40.0
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Character_and_Information/Information" unique_id=1487777256]
+layout_mode = 1
+offset_left = 275.0
+offset_top = 24.0
+offset_right = 625.0
+offset_bottom = 196.0
+theme = ExtResource("2_43dwb")
+
+[node name="Label" type="Label" parent="Character_and_Information/Information/VBoxContainer" unique_id=926928854]
+custom_minimum_size = Vector2(300, 40)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "农场名称"
+horizontal_alignment = 1
+
+[node name="Current_cash" type="Label" parent="Character_and_Information/Information/VBoxContainer" unique_id=2094566653]
+custom_minimum_size = Vector2(300, 40)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "目前持有现金：111"
+horizontal_alignment = 1
+
+[node name="Total_cash" type="Label" parent="Character_and_Information/Information/VBoxContainer" unique_id=823755541]
+custom_minimum_size = Vector2(300, 40)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "总收入：111"
+horizontal_alignment = 1
+
+[node name="Label4" type="Label" parent="Character_and_Information/Information/VBoxContainer" unique_id=279892021]
+custom_minimum_size = Vector2(300, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 24
+text = "第1年春季1日"
+horizontal_alignment = 1

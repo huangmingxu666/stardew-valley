@@ -1,0 +1,65 @@
+[gd_scene format=3 uid="uid://ccbic11c6ixkw"]
+
+[ext_resource type="Texture2D" uid="uid://cbnoo6vyougor" path="res://assets/UI/Modern_UI_Style_1_32x32.png" id="1_ui"]
+[ext_resource type="Theme" uid="uid://22qpd6ligg50" path="res://resources/ui/ui_theme.tres" id="2_theme"]
+[ext_resource type="Script" uid="uid://dpfanjfxvmnpb" path="res://scripts/ui/PlayerCustomizationSlot.gd" id="3_script"]
+
+[sub_resource type="AtlasTexture" id="1_slot_texture"]
+atlas = ExtResource("1_ui")
+region = Rect2(24, 502, 48, 50)
+
+[node name="PlayerCustomization" type="Control" unique_id=994295053]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 48.0
+offset_bottom = 48.0
+mouse_filter = 1
+theme = ExtResource("2_theme")
+script = ExtResource("3_script")
+
+[node name="Bg" type="TextureRect" parent="." unique_id=2061699654]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.0
+offset_top = -25.0
+offset_right = 24.0
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("1_slot_texture")
+
+[node name="SelectedFrame" type="TextureRect" parent="." unique_id=97422356]
+self_modulate = Color(1, 0.8784314, 0.3882353, 0.22)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.0
+offset_top = -25.0
+offset_right = 24.0
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Overlay" type="Control" parent="." unique_id=1235129213]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Icon" type="TextureRect" parent="Overlay" unique_id=965990113]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 48.0
+offset_bottom = 48.0

@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://l7swfdrmq6md"]
+
+[ext_resource type="Theme" uid="uid://22qpd6ligg50" path="res://resources/ui/ui_theme.tres" id="1_2nm5o"]
+[ext_resource type="Texture2D" uid="uid://cbnoo6vyougor" path="res://assets/UI/Modern_UI_Style_1_32x32.png" id="1_p7unl"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2nm5o"]
+atlas = ExtResource("1_p7unl")
+region = Rect2(618, 158, 10, 36)
+
+[node name="Money" type="PanelContainer" unique_id=421864145]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1142.0
+offset_bottom = -612.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_2nm5o")
+
+[node name="BG" type="TextureRect" parent="." unique_id=538610891]
+layout_mode = 2
+texture = SubResource("AtlasTexture_2nm5o")
+
+[node name="Icon" type="Label" parent="BG" unique_id=256836221]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -3.0
+offset_top = -8.5
+offset_right = 5.0
+offset_bottom = 8.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.7858549, 1.0440452)
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "2"

@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://dw6hgg0tu8f17"]
 
 [ext_resource type="Texture2D" uid="uid://cv53uekm7lqjc" path="res://assets/Object/Building/Farmer_House/Japanese_Home_1_Layer_1_32x32.png" id="1_s2edq"]
+[ext_resource type="TileSet" uid="uid://5jdmkhyet53d" path="res://resources/Tileset/Furniture_Tileset.tres" id="1_yqpat"]
 [ext_resource type="PackedScene" uid="uid://clv2hmtmkv4du" path="res://scenes/player/Player.tscn" id="3_lejw5"]
-[ext_resource type="Texture2D" uid="uid://btp1bb5yh0xyb" path="res://assets/Object/Building/Farmer_House/Japanese_Home_1_Layer_2_32x32.png" id="4_ho23j"]
 [ext_resource type="Script" uid="uid://bbxqp350pvrs2" path="res://scripts/world/SceneSpawnController.gd" id="5_qpsik"]
 [ext_resource type="Script" uid="uid://bhiyx72nay5rp" path="res://scripts/objects/SceneExitArea.gd" id="6_k8n0r"]
 
@@ -40,12 +40,27 @@ size = Vector2(352, 84)
 size = Vector2(38.64072, 8.2842865)
 
 [node name="FarmerHouseInterior" type="Node2D" unique_id=1083391302]
+y_sort_enabled = true
+
+[node name="Object" type="Node2D" parent="." unique_id=1962075565]
+z_index = 1
+
+[node name="InteractiveLayer" type="TileMapLayer" parent="Object" unique_id=1880426303]
+y_sort_enabled = true
+position = Vector2(-335.99997, 136.99998)
+rotation = -0.00033760158
+tile_map_data = PackedByteArray(0, 0, 16, 0, 3, 0, 1, 0, 0, 0, 0, 0, 2, 0)
+tile_set = ExtResource("1_yqpat")
+
+[node name="FunitureLayer" type="TileMapLayer" parent="Object" unique_id=1364938724]
+tile_set = ExtResource("1_yqpat")
 
 [node name="Backdrop" type="Polygon2D" parent="." unique_id=53148778]
 color = Color(0, 0, 0, 1)
 polygon = PackedVector2Array(-1024, -1024, 1632, -1024, 1632, 1452, -1024, 1452)
 
 [node name="InteriorBase" type="Sprite2D" parent="." unique_id=489599884]
+y_sort_enabled = true
 texture_filter = 1
 texture = ExtResource("1_s2edq")
 centered = false
@@ -56,7 +71,6 @@ position = Vector2(192, 328)
 [node name="InteriorOverlay" type="Sprite2D" parent="." unique_id=1228423102]
 visible = false
 texture_filter = 1
-texture = ExtResource("4_ho23j")
 centered = false
 
 [node name="Markers" type="Node2D" parent="." unique_id=478997637]

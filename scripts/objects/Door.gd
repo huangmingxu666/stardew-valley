@@ -33,6 +33,9 @@ func interact(_player: PlayerController) -> void:
 		return
 
 	_transitioning = true
+	SceneTransition.lock_input_for_seconds(SceneTransition.TRANSITION_INPUT_LOCK_SECONDS)
+	if _player != null:
+		_player.clear_input_state()
 
 	if play_open_animation and door_visible and door_sprite != null:
 		await _play_open_animation()

@@ -13,16 +13,10 @@ const DEFAULT_TOOL_RESOURCE_PATHS: Array[String] = [
 	"res://resources/tools/watering_can.tres",
 ]
 
-const TOOL_SLOT_ACTIONS: Array[StringName] = [
-	&"tool_slot_1",
-	&"tool_slot_2",
-	&"tool_slot_3",
-	&"tool_slot_4",
-]
-
 @export var tool_definitions: Array[ToolData] = []
 @export_node_path("FarmGrid") var farm_grid_path: NodePath
 @export var starting_tool_id: StringName = &""
+@export var use_legacy_slot_input: bool = false
 
 var player: PlayerController
 var farm_grid: FarmGrid
@@ -51,14 +45,19 @@ func use_current_tool() -> bool:
 	return success
 
 func handle_input(event: InputEvent) -> void:
+	if not use_legacy_slot_input:
+		return
 	if player != null and player.is_tool_use_locked():
 		return
 
-	for slot_index: int in range(TOOL_SLOT_ACTIONS.size()):
-		var action_name: StringName = TOOL_SLOT_ACTIONS[slot_index]
-		if event.is_action_pressed(action_name, false, true):
-			select_tool_by_slot(slot_index)
-			return
+	if event.is_action_pressed(&"tool_slot_1", false, true):
+		select_tool_by_slot(0)
+	elif event.is_action_pressed(&"tool_slot_2", false, true):
+		select_tool_by_slot(1)
+	elif event.is_action_pressed(&"tool_slot_3", false, true):
+		select_tool_by_slot(2)
+	elif event.is_action_pressed(&"tool_slot_4", false, true):
+		select_tool_by_slot(3)
 
 func select_tool_by_slot(slot_index: int) -> void:
 	if slot_index < 0:
@@ -72,6 +71,9 @@ func select_tool_by_slot(slot_index: int) -> void:
 	select_tool_by_id(tool_id)
 
 func select_tool_by_id(tool_id: StringName) -> void:
+	if player != null and player.is_tool_use_locked() and selected_tool_id != tool_id:
+		return
+
 	var tool_data: ToolData = get_tool_data(tool_id)
 	if tool_data == null:
 		return

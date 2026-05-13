@@ -1,3 +1,31 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://brere8vaxmi4a"]
 
-[node name="ShopPanel" type="Control"]
+[ext_resource type="PackedScene" uid="uid://mq0vf6h5khlf" path="res://scenes/ui/backpack.tscn" id="1_a0ju1"]
+
+[node name="ShopPanel" type="Control" unique_id=540090436]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Backpack" parent="." unique_id=1180033002 instance=ExtResource("1_a0ju1")]
+layout_mode = 1
+anchors_preset = 5
+anchor_top = 0.0
+anchor_bottom = 0.0
+offset_top = 20.0
+offset_bottom = 240.0
+grow_vertical = 1
+
+[node name="Backpack2" parent="." unique_id=1987672217 instance=ExtResource("1_a0ju1")]
+layout_mode = 1
+anchors_preset = 7
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -240.0
+offset_bottom = -20.0
+grow_vertical = 0

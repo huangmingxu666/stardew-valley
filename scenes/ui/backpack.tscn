@@ -1,0 +1,129 @@
+[gd_scene format=3 uid="uid://mq0vf6h5khlf"]
+
+[ext_resource type="Theme" uid="uid://22qpd6ligg50" path="res://resources/ui/ui_theme.tres" id="1_675hf"]
+[ext_resource type="Texture2D" uid="uid://cbnoo6vyougor" path="res://assets/UI/Modern_UI_Style_1_32x32.png" id="2_6b862"]
+[ext_resource type="PackedScene" uid="uid://dpdcahcw7kbra" path="res://scenes/ui/Slot.tscn" id="3_jsabq"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sii1i"]
+atlas = ExtResource("2_6b862")
+region = Rect2(16, 16, 64, 62)
+
+[node name="Backpack" type="NinePatchRect" unique_id=1180033002]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -325.0
+offset_top = -225.0
+offset_right = 325.0
+offset_bottom = -15.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_675hf")
+texture = SubResource("AtlasTexture_sii1i")
+region_rect = Rect2(0, 0, 64, 62)
+patch_margin_left = 16
+patch_margin_top = 14
+patch_margin_right = 14
+patch_margin_bottom = 10
+
+[node name="GridContainer" type="GridContainer" parent="." unique_id=1247999217]
+layout_mode = 1
+offset_left = 22.0
+offset_top = 15.0
+offset_right = 698.0
+offset_bottom = 215.0
+columns = 10
+metadata/_edit_use_anchors_ = true
+
+[node name="SlotUI" parent="GridContainer" unique_id=1708346592 instance=ExtResource("3_jsabq")]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="SlotUI2" parent="GridContainer" unique_id=2066920268 instance=ExtResource("3_jsabq")]
+layout_mode = 2
+
+[node name="SlotUI3" parent="GridContainer" unique_id=1488443925 instance=ExtResource("3_jsabq")]
+layout_mode = 2
+
+[node name="SlotUI4" parent="GridContainer" unique_id=1951224623 instance=ExtResource("3_jsabq")]
+layout_mode = 2
+
+[node name="SlotUI5" parent="GridContainer" unique_id=225510519 instance=ExtResource("3_jsabq")]
+layout_mode = 2
+
+[node name="SlotUI6" parent="GridContainer" unique_id=2096035911 instance=ExtResource("3_jsabq")]
+layout_mode = 2
+
+[node name="SlotUI7" parent="GridContainer" unique_id=42225121 instance=ExtResource("3_jsabq")]
+layout_mode = 2
+
+[node name="SlotUI8" parent="GridContainer" unique_id=450319699 instance=ExtResource("3_jsabq")]
+layout_mode = 2
+
+[node name="SlotUI9" parent="GridContainer" unique_id=1429275273 instance=ExtResource("3_jsabq")]
+layout_mode = 2
+
+[node name="SlotUI10" parent="GridContainer" unique_id=1484210313 instance=ExtResource("3_jsabq")]
+layout_mode = 2
+
+[node name="SlotUI11" parent="GridContainer" unique_id=597870739 instance=ExtResource("3_jsabq")]
+layout_mode = 2
+
+[node name="SlotUI12" parent="GridContainer" unique_id=2081560071 instance=ExtResource("3_jsabq")]
+layout_mode = 2
+
+[node name="SlotUI13" parent="GridContainer" unique_id=431254931 instance=ExtResource("3_jsabq")]
+layout_mode = 2
+
+[node name="SlotUI14" parent="GridContainer" unique_id=1831560340 instance=ExtResource("3_jsabq")]
+layout_mode = 2
+
+[node name="SlotUI15" parent="GridContainer" unique_id=1096768607 instance=ExtResource("3_jsabq")]
+layout_mode = 2
+
+[node name="SlotUI16" parent="GridContainer" unique_id=1783384348 instance=ExtResource("3_jsabq")]
+layout_mode = 2
+
+[node name="SlotUI17" parent="GridContainer" unique_id=1606128393 instance=ExtResource("3_jsabq")]
+layout_mode = 2
+
+[node name="SlotUI18" parent="GridContainer" unique_id=823065948 instance=ExtResource("3_jsabq")]
+layout_mode = 2
+
+[node name="SlotUI19" parent="GridContainer" unique_id=998666189 instance=ExtResource("3_jsabq")]
+layout_mode = 2
+
+[node name="SlotUI20" parent="GridContainer" unique_id=653810826 instance=ExtResource("3_jsabq")]
+layout_mode = 2
+
+[node name="SlotUI21" parent="GridContainer" unique_id=265940553 instance=ExtResource("3_jsabq")]
+layout_mode = 2
+
+[node name="SlotUI22" parent="GridContainer" unique_id=997446873 instance=ExtResource("3_jsabq")]
+layout_mode = 2
+
+[node name="SlotUI23" parent="GridContainer" unique_id=176740008 instance=ExtResource("3_jsabq")]
+layout_mode = 2
+
+[node name="SlotUI24" parent="GridContainer" unique_id=1838431843 instance=ExtResource("3_jsabq")]
+layout_mode = 2
+
+[node name="SlotUI25" parent="GridContainer" unique_id=859586742 instance=ExtResource("3_jsabq")]
+layout_mode = 2
+
+[node name="SlotUI26" parent="GridContainer" unique_id=646406288 instance=ExtResource("3_jsabq")]
+layout_mode = 2
+
+[node name="SlotUI27" parent="GridContainer" unique_id=2016577612 instance=ExtResource("3_jsabq")]
+layout_mode = 2
+
+[node name="SlotUI28" parent="GridContainer" unique_id=2128819160 instance=ExtResource("3_jsabq")]
+layout_mode = 2
+
+[node name="SlotUI29" parent="GridContainer" unique_id=1575640527 instance=ExtResource("3_jsabq")]
+layout_mode = 2
+
+[node name="SlotUI30" parent="GridContainer" unique_id=1128345662 instance=ExtResource("3_jsabq")]
+layout_mode = 2

@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://ca5uwdijj73cs" path="res://scripts/player/PlayerInteractor.gd" id="3"]
 [ext_resource type="Script" uid="uid://iq2mv3chsfhr" path="res://scripts/player/ToolController.gd" id="4"]
 [ext_resource type="Script" uid="uid://dlr27uoth00ad" path="res://scripts/player/state_machine/PlayerStateMachine.gd" id="5"]
+[ext_resource type="Texture2D" uid="uid://bdaywho0s1xyf" path="res://assets/Player/Tools/Tool_Watering_Can.png" id="5_8qjgm"]
 [ext_resource type="Script" uid="uid://bdfpqmjyn4evo" path="res://scripts/player/state_machine/PlayerIdleState.gd" id="6"]
 [ext_resource type="Script" uid="uid://duqnmq5i1rfwm" path="res://scripts/player/state_machine/PlayerMoveState.gd" id="7"]
 [ext_resource type="Script" uid="uid://duotyaeypj7ci" path="res://scripts/data/ToolData.gd" id="7_rn7t0"]
@@ -105,10 +106,11 @@ frame = 322
 
 [node name="ToolSprite" type="Sprite2D" parent="Visual" unique_id=1298926704]
 texture_filter = 1
-position = Vector2(0, -13)
+position = Vector2(0, -16)
+texture = ExtResource("5_8qjgm")
 hframes = 56
 vframes = 3
-frame = 154
+frame = 79
 
 [node name="PlayerInteractor" type="Node2D" parent="." unique_id=2024138809]
 script = ExtResource("3")

@@ -1,0 +1,12 @@
+[gd_resource type="TileSet" format=3 uid="uid://5jdmkhyet53d"]
+
+[ext_resource type="PackedScene" uid="uid://dhimi6lfym76b" path="res://scenes/objects/Bed.tscn" id="2_1yrml"]
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_7wi5e"]
+resource_name = "Interactive_Furniture"
+scenes/2/scene = ExtResource("2_1yrml")
+scenes/2/display_placeholder = true
+
+[resource]
+tile_size = Vector2i(32, 32)
+sources/1 = SubResource("TileSetScenesCollectionSource_7wi5e")

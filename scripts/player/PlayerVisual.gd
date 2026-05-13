@@ -23,6 +23,7 @@ const TOOL_DOWN_START_FRAME: int = 18
 var current_tool_data: ToolData
 var current_tool_visual_data: ToolVisualData
 var fallback_tool_visuals: Dictionary = {}
+var _tool_display_mode: StringName = &""
 
 func _ready() -> void:
 	tool_sprite.visible = false
@@ -91,16 +92,15 @@ func _apply_direction_flip(direction: StringName) -> void:
 func set_tool_data(tool_data: ToolData) -> void:
 	current_tool_data = tool_data
 	current_tool_visual_data = _resolve_tool_visual_data(tool_data)
-	if current_tool_visual_data == null or current_tool_visual_data.texture == null:
+	_tool_display_mode = &""
+	if current_tool_visual_data == null or current_tool_visual_data.get_equipped_texture() == null:
 		hide_tool()
 		tool_sprite.texture = null
 		tool_sprite.hframes = 1
 		tool_sprite.vframes = 1
 		return
 
-	tool_sprite.texture = current_tool_visual_data.texture
-	tool_sprite.hframes = current_tool_visual_data.hframes
-	tool_sprite.vframes = current_tool_visual_data.vframes
+	_apply_tool_texture_mode(&"equipped")
 	tool_sprite.frame = 0
 	hide_tool()
 
@@ -113,7 +113,7 @@ func show_tool_use(direction: StringName, cycle_time: float) -> void:
 		hide_tool()
 		return
 
-	_show_equipped_tool_clip(clip, direction, cycle_time)
+	_show_use_tool_clip(clip, direction, cycle_time)
 
 func hide_tool() -> void:
 	tool_sprite.visible = false
@@ -213,8 +213,44 @@ func _show_equipped_tool_clip(clip: FrameAnimationClip, direction: StringName, c
 		hide_tool()
 		return
 
+	_apply_tool_texture_mode(&"equipped")
 	tool_sprite.visible = true
 	tool_sprite.position = current_tool_visual_data.get_offset(direction)
 	tool_sprite.z_index = current_tool_visual_data.get_z_index(direction)
 	tool_sprite.frame = clip.get_frame_at_time(cycle_time)
 	tool_sprite.flip_h = direction == &"left"
+
+func _show_use_tool_clip(clip: FrameAnimationClip, direction: StringName, cycle_time: float) -> void:
+	if current_tool_visual_data == null or clip == null:
+		hide_tool()
+		return
+
+	_apply_tool_texture_mode(&"use")
+	tool_sprite.visible = true
+	tool_sprite.position = current_tool_visual_data.get_offset(direction)
+	tool_sprite.z_index = current_tool_visual_data.get_z_index(direction)
+	tool_sprite.frame = clip.get_frame_at_time(cycle_time)
+	tool_sprite.flip_h = direction == &"left"
+
+func _apply_tool_texture_mode(mode: StringName) -> void:
+	if current_tool_visual_data == null:
+		return
+	if _tool_display_mode == mode:
+		return
+
+	var next_texture: Texture2D
+	var next_hframes: int = 1
+	var next_vframes: int = 1
+	if mode == &"use":
+		next_texture = current_tool_visual_data.get_use_texture()
+		next_hframes = current_tool_visual_data.get_use_hframes()
+		next_vframes = current_tool_visual_data.get_use_vframes()
+	else:
+		next_texture = current_tool_visual_data.get_equipped_texture()
+		next_hframes = current_tool_visual_data.get_equipped_hframes()
+		next_vframes = current_tool_visual_data.get_equipped_vframes()
+
+	tool_sprite.texture = next_texture
+	tool_sprite.hframes = next_hframes
+	tool_sprite.vframes = next_vframes
+	_tool_display_mode = mode

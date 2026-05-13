@@ -1,8 +1,8 @@
-[gd_resource type="Resource" script_class="ToolData" load_steps=4 format=3]
+[gd_resource type="Resource" script_class="ToolData" format=3 uid="uid://caff6i0t8gcm0"]
 
-[ext_resource type="Script" path="res://scripts/data/ToolData.gd" id="1"]
-[ext_resource type="Texture2D" path="res://assets/Player/Tools/Tool_Fishing_Rod.png" id="2"]
-[ext_resource type="Resource" path="res://resources/tools/fishing_rod_visual.tres" id="3"]
+[ext_resource type="Script" uid="uid://duotyaeypj7ci" path="res://scripts/data/ToolData.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://cq7gdj1eh3wdx" path="res://assets/Icon/Singles_Icons_32x32_Tools_Fishing_Rod.png" id="2"]
+[ext_resource type="Resource" uid="uid://vln2qrxspoaq" path="res://resources/tools/fishing_rod_visual.tres" id="3"]
 
 [resource]
 script = ExtResource("1")

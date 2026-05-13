@@ -1,3 +1,33 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://bpaer0swyh0bl"]
 
-[node name="ShippingBin" type="Node2D"]
+[ext_resource type="Script" uid="uid://cvl2omvjkfx5e" path="res://scripts/economy/ShippingBin.gd" id="1_v3h61"]
+[ext_resource type="Texture2D" uid="uid://sbswdp8lo23k" path="res://assets/Object/Shipping_Box/Shipping_Box_32x32.png" id="2_aw2nd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_interact"]
+size = Vector2(80, 80)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_blocker"]
+size = Vector2(48, 18)
+
+[node name="ShippingBin" type="Area2D" unique_id=2087970834]
+y_sort_enabled = true
+collision_layer = 2
+script = ExtResource("1_v3h61")
+interaction_prompt = "Ship Items"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=110593300]
+position = Vector2(0, -20)
+shape = SubResource("RectangleShape2D_interact")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=106713250]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=612789857]
+position = Vector2(0, -9)
+shape = SubResource("RectangleShape2D_blocker")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=743008314]
+texture_filter = 1
+position = Vector2(-32, -96)
+texture = ExtResource("2_aw2nd")
+centered = false
+hframes = 20

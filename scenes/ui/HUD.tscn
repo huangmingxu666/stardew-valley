@@ -1,3 +1,388 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://p0dkdmy14cah"]
 
-[node name="HUD" type="CanvasLayer"]
+[ext_resource type="Texture2D" uid="uid://cbnoo6vyougor" path="res://assets/UI/Modern_UI_Style_1_32x32.png" id="1_kw0id"]
+[ext_resource type="Theme" uid="uid://22qpd6ligg50" path="res://resources/ui/ui_theme.tres" id="2_4ed8p"]
+[ext_resource type="PackedScene" uid="uid://dpdcahcw7kbra" path="res://scenes/ui/Slot.tscn" id="2_atyv1"]
+[ext_resource type="PackedScene" uid="uid://l7swfdrmq6md" path="res://scenes/ui/money.tscn" id="3_6ll6g"]
+[ext_resource type="Script" uid="uid://bovwcxyay5wt5" path="res://scripts/ui/HUD.gd" id="4_2eyv8"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kw0id"]
+atlas = ExtResource("1_kw0id")
+region = Rect2(16, 16, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_atyv1"]
+atlas = ExtResource("1_kw0id")
+region = Rect2(24, 600, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4ed8p"]
+atlas = ExtResource("1_kw0id")
+region = Rect2(448, 131, 30, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ig75s"]
+atlas = ExtResource("1_kw0id")
+region = Rect2(24, 600, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6ll6g"]
+atlas = ExtResource("1_kw0id")
+region = Rect2(416, 738, 31, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rnyu1"]
+atlas = ExtResource("1_kw0id")
+region = Rect2(536, 772, 50, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l20r4"]
+atlas = ExtResource("1_kw0id")
+region = Rect2(672, 458, 32, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jlufg"]
+atlas = ExtResource("1_kw0id")
+region = Rect2(638, 778, 32, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jvmx1"]
+atlas = ExtResource("1_kw0id")
+region = Rect2(672, 458, 32, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_euikm"]
+atlas = ExtResource("1_kw0id")
+region = Rect2(544, 810, 32, 12)
+
+[node name="HUD" type="CanvasLayer" unique_id=1369426593]
+script = ExtResource("4_2eyv8")
+
+[node name="Root" type="Control" parent="." unique_id=686816707]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_4ed8p")
+
+[node name="HotBar" type="NinePatchRect" parent="Root" unique_id=310059804]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -320.0
+offset_top = -80.0
+offset_right = 280.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = SubResource("AtlasTexture_kw0id")
+region_rect = Rect2(0, 0, 64, 64)
+patch_margin_left = 16
+patch_margin_top = 14
+patch_margin_right = 14
+patch_margin_bottom = 12
+
+[node name="GridContainer" type="GridContainer" parent="Root/HotBar" unique_id=92476092]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 16.0
+offset_top = -26.0
+offset_right = 586.0
+offset_bottom = 25.0
+grow_vertical = 2
+scale = Vector2(0.992, 1)
+columns = 10
+
+[node name="SlotUI" parent="Root/HotBar/GridContainer" unique_id=1708346592 instance=ExtResource("2_atyv1")]
+custom_minimum_size = Vector2(50, 48)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 0
+
+[node name="SlotUI2" parent="Root/HotBar/GridContainer" unique_id=1778439224 instance=ExtResource("2_atyv1")]
+custom_minimum_size = Vector2(0, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 0
+
+[node name="SlotUI3" parent="Root/HotBar/GridContainer" unique_id=1259566092 instance=ExtResource("2_atyv1")]
+custom_minimum_size = Vector2(0, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 0
+
+[node name="SlotUI4" parent="Root/HotBar/GridContainer" unique_id=3574175 instance=ExtResource("2_atyv1")]
+custom_minimum_size = Vector2(0, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 0
+
+[node name="SlotUI5" parent="Root/HotBar/GridContainer" unique_id=1186230045 instance=ExtResource("2_atyv1")]
+custom_minimum_size = Vector2(0, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 0
+
+[node name="SlotUI6" parent="Root/HotBar/GridContainer" unique_id=31895789 instance=ExtResource("2_atyv1")]
+custom_minimum_size = Vector2(0, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 0
+
+[node name="SlotUI7" parent="Root/HotBar/GridContainer" unique_id=745652762 instance=ExtResource("2_atyv1")]
+custom_minimum_size = Vector2(0, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 0
+
+[node name="SlotUI8" parent="Root/HotBar/GridContainer" unique_id=1331369187 instance=ExtResource("2_atyv1")]
+custom_minimum_size = Vector2(0, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 0
+
+[node name="SlotUI9" parent="Root/HotBar/GridContainer" unique_id=704313296 instance=ExtResource("2_atyv1")]
+custom_minimum_size = Vector2(0, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 0
+
+[node name="SlotUI10" parent="Root/HotBar/GridContainer" unique_id=692278816 instance=ExtResource("2_atyv1")]
+custom_minimum_size = Vector2(0, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 0
+
+[node name="TopRight" type="NinePatchRect" parent="Root" unique_id=196581544]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -48.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = 48.0
+grow_horizontal = 0
+
+[node name="TopRightTime" type="NinePatchRect" parent="Root/TopRight" unique_id=2096180567]
+layout_mode = 1
+offset_left = -88.0
+offset_right = 42.0
+offset_bottom = 60.0
+texture = SubResource("AtlasTexture_atyv1")
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Root/TopRight/TopRightTime" unique_id=1997240959]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 14.0
+offset_right = 94.0
+offset_bottom = 49.0
+
+[node name="Clock" type="TextureRect" parent="Root/TopRight/TopRightTime/HBoxContainer" unique_id=1233891195]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+texture = SubResource("AtlasTexture_4ed8p")
+
+[node name="TimeRow" type="Control" parent="Root/TopRight/TopRightTime/HBoxContainer" unique_id=1103377001]
+layout_mode = 2
+
+[node name="TimeLeft" type="Label" parent="Root/TopRight/TopRightTime/HBoxContainer/TimeRow" unique_id=267833054]
+layout_mode = 0
+offset_left = -6.0
+offset_top = -4.0
+offset_right = 63.0
+offset_bottom = 29.0
+scale = Vector2(0.91709006, 1.1818831)
+size_flags_horizontal = 4
+size_flags_vertical = 6
+theme_override_colors/font_color = Color(0.54901963, 0.3882353, 0.039215688, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 32
+text = "10:10"
+
+[node name="TopRightSeason" type="NinePatchRect" parent="Root/TopRight" unique_id=2047853859]
+layout_mode = 1
+offset_left = -88.0
+offset_top = 60.0
+offset_right = 42.0
+offset_bottom = 120.0
+texture = SubResource("AtlasTexture_atyv1")
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Root/TopRight/TopRightSeason" unique_id=1161134465]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 188.0
+offset_bottom = 43.0
+scale = Vector2(0.6275515, 1.2099615)
+
+[node name="Season" type="Label" parent="Root/TopRight/TopRightSeason/HBoxContainer" unique_id=1918880417]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+theme_override_colors/font_color = Color(0.54901963, 0.3882353, 0.039215688, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 32
+text = "1日"
+
+[node name="Week" type="Label" parent="Root/TopRight/TopRightSeason/HBoxContainer" unique_id=203842681]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+theme_override_colors/font_color = Color(0.54901963, 0.3882353, 0.039215688, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 32
+text = "星期二"
+
+[node name="TopRightMoney" type="NinePatchRect" parent="Root/TopRight" unique_id=152219772]
+layout_mode = 1
+offset_left = -88.0
+offset_top = 120.0
+offset_right = 42.0
+offset_bottom = 175.0
+theme = ExtResource("2_4ed8p")
+texture = SubResource("AtlasTexture_ig75s")
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
+
+[node name="GridContainer" type="GridContainer" parent="Root/TopRight/TopRightMoney" unique_id=2107309245]
+layout_mode = 1
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 121.0
+offset_bottom = 48.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Root/TopRight/TopRightMoney/GridContainer" unique_id=1800517873]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Coin" type="TextureRect" parent="Root/TopRight/TopRightMoney/GridContainer/HBoxContainer" unique_id=376379789]
+custom_minimum_size = Vector2(32, 35)
+layout_mode = 2
+texture = SubResource("AtlasTexture_6ll6g")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Root/TopRight/TopRightMoney/GridContainer/HBoxContainer" unique_id=182615963]
+custom_minimum_size = Vector2(75, 0)
+layout_mode = 2
+size_flags_horizontal = 6
+theme_override_constants/separation = -2
+
+[node name="Money" parent="Root/TopRight/TopRightMoney/GridContainer/HBoxContainer/HBoxContainer" unique_id=421864145 instance=ExtResource("3_6ll6g")]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Money2" parent="Root/TopRight/TopRightMoney/GridContainer/HBoxContainer/HBoxContainer" unique_id=531433221 instance=ExtResource("3_6ll6g")]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Money3" parent="Root/TopRight/TopRightMoney/GridContainer/HBoxContainer/HBoxContainer" unique_id=325446352 instance=ExtResource("3_6ll6g")]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Money4" parent="Root/TopRight/TopRightMoney/GridContainer/HBoxContainer/HBoxContainer" unique_id=1711433461 instance=ExtResource("3_6ll6g")]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Money5" parent="Root/TopRight/TopRightMoney/GridContainer/HBoxContainer/HBoxContainer" unique_id=625138215 instance=ExtResource("3_6ll6g")]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Money6" parent="Root/TopRight/TopRightMoney/GridContainer/HBoxContainer/HBoxContainer" unique_id=2002891337 instance=ExtResource("3_6ll6g")]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Money7" parent="Root/TopRight/TopRightMoney/GridContainer/HBoxContainer/HBoxContainer" unique_id=320752689 instance=ExtResource("3_6ll6g")]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Money8" parent="Root/TopRight/TopRightMoney/GridContainer/HBoxContainer/HBoxContainer" unique_id=1356389672 instance=ExtResource("3_6ll6g")]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Status" type="NinePatchRect" parent="Root" unique_id=1642733223]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -64.0
+offset_top = -88.0
+offset_right = -64.0
+offset_bottom = -88.0
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(1.0134798, 0.85536367)
+
+[node name="HealthStatus" type="NinePatchRect" parent="Root/Status" unique_id=1592549839]
+layout_mode = 1
+offset_right = 50.0
+offset_bottom = 100.0
+scale = Vector2(0.5939347, 0.9297183)
+texture = SubResource("AtlasTexture_rnyu1")
+region_rect = Rect2(0, 0, 50, 26)
+patch_margin_left = 4
+patch_margin_top = 4
+patch_margin_right = 6
+patch_margin_bottom = 8
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="Root/Status/HealthStatus" unique_id=239959830]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 4.0
+offset_top = 45.0
+offset_right = 40.0
+offset_bottom = 57.0
+grow_vertical = 2
+rotation = -1.5707964
+scale = Vector2(2.85, 3.4)
+value = 80.0
+texture_under = SubResource("AtlasTexture_l20r4")
+texture_progress = SubResource("AtlasTexture_jlufg")
+
+[node name="EnergyStatus" type="NinePatchRect" parent="Root/Status" unique_id=574194347]
+layout_mode = 1
+offset_left = 30.0
+offset_right = 80.0
+offset_bottom = 100.0
+scale = Vector2(0.5939347, 0.9297183)
+texture = SubResource("AtlasTexture_rnyu1")
+region_rect = Rect2(0, 0, 50, 26)
+patch_margin_left = 4
+patch_margin_top = 4
+patch_margin_right = 6
+patch_margin_bottom = 8
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="Root/Status/EnergyStatus" unique_id=1058030062]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 4.0
+offset_top = 45.0
+offset_right = 40.0
+offset_bottom = 57.0
+grow_vertical = 2
+rotation = -1.5707964
+scale = Vector2(2.85, 3.4)
+value = 100.0
+texture_under = SubResource("AtlasTexture_jvmx1")
+texture_progress = SubResource("AtlasTexture_euikm")

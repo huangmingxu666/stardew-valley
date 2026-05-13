@@ -18,10 +18,17 @@ config/icon="res://icon.svg"
 [autoload]
 
 SceneTransition="*res://scripts/core/SceneTransitionState.gd"
+SleepTransition="*res://scripts/core/SleepTransitionController.gd"
+GameTime="*res://scripts/core/TimeManager.gd"
+GameState="*res://scripts/core/GameState.gd"
 
 [editor_plugins]
 
 enabled=PackedStringArray()
+
+[gui]
+
+theme/custom_font="uid://bvilir478ga1b"
 
 [input]
 
@@ -74,6 +81,11 @@ use_left={
 "events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":1,"position":Vector2(202, 10),"global_position":Vector2(211, 58),"factor":1.0,"button_index":1,"canceled":false,"pressed":true,"double_click":false,"script":null)
 ]
 }
+"交互"={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":70,"key_label":0,"unicode":70,"location":0,"echo":false,"script":null)
+]
+}
 
 [physics]
 
@@ -81,6 +93,7 @@ use_left={
 
 [rendering]
 
+textures/canvas_textures/default_texture_filter=0
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"

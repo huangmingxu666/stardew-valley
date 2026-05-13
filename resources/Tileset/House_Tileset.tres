@@ -1,0 +1,15 @@
+[gd_resource type="TileSet" format=3 uid="uid://vercxq8b1om3"]
+
+[ext_resource type="PackedScene" uid="uid://c0splk453sbw8" path="res://scenes/objects/farmer_home.tscn" id="1_hb32t"]
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_q0jcs"]
+resource_name = "Player_Home"
+scenes/1/scene = ExtResource("1_hb32t")
+scenes/1/display_placeholder = true
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_wm5ym"]
+resource_name = "Npc_Home"
+
+[resource]
+sources/0 = SubResource("TileSetScenesCollectionSource_q0jcs")
+sources/1 = SubResource("TileSetScenesCollectionSource_wm5ym")

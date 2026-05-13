@@ -15,6 +15,8 @@ func _ready() -> void:
 	if spawn_marker != null:
 		player.global_position = spawn_marker.global_position
 
+	SceneTransition.handle_player_spawn(player as PlayerController)
+
 
 func _resolve_spawn_marker() -> Marker2D:
 	var default_spawn: Marker2D = get_node_or_null(default_spawn_path) as Marker2D

@@ -11,7 +11,7 @@ signal facing_changed(direction: StringName)
 @export var input_down_action: StringName = &"down"
 @export var input_left_action: StringName = &"left"
 @export var input_right_action: StringName = &"right"
-@export var interact_action: StringName = &"ui_accept"
+@export var interact_action: StringName = &"交互"
 @export var use_left_action: StringName = &"use_left"
 
 var move_input: Vector2 = Vector2.ZERO
@@ -32,6 +32,9 @@ func _ready() -> void:
 	_on_facing_changed(facing_direction)
 
 func _input(event: InputEvent) -> void:
+	if SceneTransition.is_input_locked():
+		return
+
 	for action: StringName in _get_move_actions():
 		if event.is_action_pressed(action, false, true):
 			pressed_order.erase(action)
@@ -41,13 +44,25 @@ func _input(event: InputEvent) -> void:
 
 	if interact_action != &"" and event.is_action_pressed(interact_action, false, true):
 		interact_requested = true
-	if use_left_action != &"" and event.is_action_pressed(use_left_action, false, true) and has_selected_tool() and not is_tool_use_locked():
+	if (
+		use_left_action != &""
+		and event.is_action_pressed(use_left_action, false, true)
+		and has_selected_tool()
+		and not is_tool_use_locked()
+		and not is_inventory_input_blocked()
+	):
 		tool_use_requested = true
 
 	if tool_controller != null:
 		tool_controller.handle_input(event)
 
 func _physics_process(delta: float) -> void:
+	if SceneTransition.is_input_locked():
+		clear_input_state()
+		if debug_draw_target_tile:
+			queue_redraw()
+		return
+
 	_refresh_input_state()
 	if state_machine != null:
 		state_machine.physics_update(delta)
@@ -69,6 +84,13 @@ func apply_movement(_delta: float) -> void:
 func stop_movement() -> void:
 	velocity = Vector2.ZERO
 	move_and_slide()
+
+func clear_input_state() -> void:
+	move_input = Vector2.ZERO
+	pressed_order.clear()
+	interact_requested = false
+	tool_use_requested = false
+	stop_movement()
 
 func show_idle_frame(cycle_time: float = 0.0) -> void:
 	if visual == null:
@@ -107,6 +129,10 @@ func try_use_current_tool() -> bool:
 	return tool_controller.use_current_tool()
 
 func consume_tool_use_requested() -> bool:
+	if is_inventory_input_blocked():
+		tool_use_requested = false
+		return false
+
 	var requested: bool = tool_use_requested
 	tool_use_requested = false
 	return requested
@@ -209,6 +235,12 @@ func _update_facing_from_pressed_order() -> void:
 			break
 
 	if last_action == &"":
+		for action: StringName in _get_move_actions():
+			if Input.is_action_pressed(action):
+				last_action = action
+				break
+
+	if last_action == &"":
 		return
 
 	var new_direction: StringName = _action_to_direction(last_action)
@@ -256,3 +288,20 @@ func _get_move_actions() -> Array[StringName]:
 func _get_target_sample_distance(distance: float) -> float:
 	var advance_offset: float = float(tile_size) * target_tile_advance_ratio
 	return maxf(distance - advance_offset, 0.0)
+
+func is_inventory_input_blocked() -> bool:
+	var current_scene: Node = get_tree().current_scene
+	if current_scene == null:
+		return false
+
+	return _has_visible_inventory_panel(current_scene)
+
+func _has_visible_inventory_panel(root: Node) -> bool:
+	if root is InventoryPanelUI:
+		return (root as Control).is_visible_in_tree()
+
+	for child: Node in root.get_children():
+		if _has_visible_inventory_panel(child):
+			return true
+
+	return false

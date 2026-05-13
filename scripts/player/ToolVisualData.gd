@@ -5,6 +5,9 @@ class_name ToolVisualData
 @export var texture: Texture2D
 @export var hframes: int = 1
 @export var vframes: int = 1
+@export var use_texture: Texture2D
+@export var use_hframes: int = 0
+@export var use_vframes: int = 0
 @export var idle_down: FrameAnimationClip
 @export var idle_up: FrameAnimationClip
 @export var idle_side: FrameAnimationClip
@@ -118,6 +121,30 @@ func get_effect_time(direction: StringName) -> float:
 
 	effect_index = clampi(effect_index, 0, frame_count - 1)
 	return float(effect_index) / clip.fps
+
+func get_equipped_texture() -> Texture2D:
+	return texture
+
+func get_equipped_hframes() -> int:
+	return max(hframes, 1)
+
+func get_equipped_vframes() -> int:
+	return max(vframes, 1)
+
+func get_use_texture() -> Texture2D:
+	if use_texture != null:
+		return use_texture
+	return texture
+
+func get_use_hframes() -> int:
+	if use_texture != null and use_hframes > 0:
+		return use_hframes
+	return max(hframes, 1)
+
+func get_use_vframes() -> int:
+	if use_texture != null and use_vframes > 0:
+		return use_vframes
+	return max(vframes, 1)
 
 func _get_effect_frame_index(direction: StringName) -> int:
 	match direction:

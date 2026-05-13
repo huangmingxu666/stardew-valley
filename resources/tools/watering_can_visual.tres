@@ -25,6 +25,41 @@ end_frame = 307
 fps = 10.0
 loop = false
 
+[sub_resource type="Resource" id="Resource_jp7nx"]
+script = ExtResource("3")
+start_frame = 18
+end_frame = 23
+metadata/_custom_type_script = "uid://beak275xetulk"
+
+[sub_resource type="Resource" id="Resource_h4jft"]
+script = ExtResource("3")
+end_frame = 5
+metadata/_custom_type_script = "uid://beak275xetulk"
+
+[sub_resource type="Resource" id="Resource_tbjie"]
+script = ExtResource("3")
+start_frame = 6
+end_frame = 11
+metadata/_custom_type_script = "uid://beak275xetulk"
+
+[sub_resource type="Resource" id="Resource_bmpem"]
+script = ExtResource("3")
+start_frame = 74
+end_frame = 79
+metadata/_custom_type_script = "uid://beak275xetulk"
+
+[sub_resource type="Resource" id="Resource_g50wc"]
+script = ExtResource("3")
+start_frame = 56
+end_frame = 61
+metadata/_custom_type_script = "uid://beak275xetulk"
+
+[sub_resource type="Resource" id="Resource_4hk15"]
+script = ExtResource("3")
+start_frame = 62
+end_frame = 67
+metadata/_custom_type_script = "uid://beak275xetulk"
+
 [sub_resource type="Resource" id="1"]
 script = ExtResource("3")
 start_frame = 154
@@ -52,6 +87,12 @@ tool_id = &"watering_can"
 texture = ExtResource("2")
 hframes = 56
 vframes = 3
+idle_down = SubResource("Resource_jp7nx")
+idle_up = SubResource("Resource_tbjie")
+idle_side = SubResource("Resource_h4jft")
+move_down = SubResource("Resource_bmpem")
+move_up = SubResource("Resource_4hk15")
+move_side = SubResource("Resource_g50wc")
 use_down = SubResource("1")
 use_up = SubResource("2")
 use_side = SubResource("3")

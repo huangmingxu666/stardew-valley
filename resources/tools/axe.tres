@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://duotyaeypj7ci" path="res://scripts/data/ToolData.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://byleah1bgjd3n" path="res://assets/Player/Tools/Tool_Axe.png" id="2"]
 [ext_resource type="Resource" uid="uid://bymmoqgo62e65" path="res://resources/tools/axe_visual.tres" id="3"]
+[ext_resource type="Texture2D" uid="uid://cp44ftshkm25v" path="res://assets/Icon/Singles_Icons_32x32_Tools_Axe.png" id="4"]
 
 [resource]
 script = ExtResource("1")
@@ -12,6 +13,6 @@ description = "Prototype axe data. Registered for hotbar selection and later rol
 tool_kind = 1
 primary_action = 1
 slot_index = 0
-icon_texture = ExtResource("2")
+icon_texture = ExtResource("4")
 use_texture = ExtResource("2")
 visual_data = ExtResource("3")

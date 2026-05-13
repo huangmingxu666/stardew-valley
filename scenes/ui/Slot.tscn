@@ -1,0 +1,77 @@
+[gd_scene format=3 uid="uid://dpdcahcw7kbra"]
+
+[ext_resource type="Texture2D" uid="uid://cbnoo6vyougor" path="res://assets/UI/Modern_UI_Style_1_32x32.png" id="1_nluyq"]
+[ext_resource type="Theme" uid="uid://22qpd6ligg50" path="res://resources/ui/ui_theme.tres" id="1_risim"]
+[ext_resource type="Script" uid="uid://dfcljjgk2a4sl" path="res://scripts/ui/SlotUI.gd" id="2_i8pd1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cjo0x"]
+atlas = ExtResource("1_nluyq")
+region = Rect2(24, 502, 48, 50)
+
+[node name="SlotUI" type="Control" unique_id=1708346592]
+custom_minimum_size = Vector2(56, 56)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1096.0
+offset_bottom = -592.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme = ExtResource("1_risim")
+script = ExtResource("2_i8pd1")
+
+[node name="Bg" type="TextureRect" parent="." unique_id=1489608283]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.0
+offset_top = -25.0
+offset_right = 24.0
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_cjo0x")
+
+[node name="SelectedFrame" type="TextureRect" parent="." unique_id=411863421]
+self_modulate = Color(1, 0.8784314, 0.3882353, 0.45)
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Overlay" type="Control" parent="." unique_id=1917849257]
+layout_mode = 1
+anchors_preset = 0
+
+[node name="Icon" type="TextureRect" parent="Overlay" unique_id=964779923]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 48.0
+offset_bottom = 48.0
+mouse_behavior_recursive = 1
+
+[node name="CountLabel" type="Label" parent="Overlay" unique_id=212615661]
+layout_mode = 1
+offset_left = 6.0
+offset_top = 28.0
+offset_right = 52.0
+offset_bottom = 54.0
+theme_override_colors/font_color = Color(0.96, 0.93, 0.8, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+text = "99"
+horizontal_alignment = 2
+vertical_alignment = 2
