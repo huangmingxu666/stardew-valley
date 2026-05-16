@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://30qdhyvkocsx"
-path="res://.godot/imported/Singles_Icons_32x32_Seed_Bags_Tomato.png-2a0ff34536e551873fc2310625f8928f.ctex"
+uid="uid://bhulo62vy4515"
+path="res://.godot/imported/Singles_Icons_32x32_Crops_Tomato.png-d894c408000b59e7f26d1f6e125f99f0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Icon/Singles_Icons_32x32_Seed_Bags_Tomato.png"
-dest_files=["res://.godot/imported/Singles_Icons_32x32_Seed_Bags_Tomato.png-2a0ff34536e551873fc2310625f8928f.ctex"]
+source_file="res://assets/Object/Plant/Tomato/Singles_Icons_32x32_Crops_Tomato.png"
+dest_files=["res://.godot/imported/Singles_Icons_32x32_Crops_Tomato.png-d894c408000b59e7f26d1f6e125f99f0.ctex"]
 
 [params]
 

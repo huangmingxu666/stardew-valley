@@ -2,9 +2,20 @@ extends Control
 class_name SlotUI
 
 signal quick_equip_requested(section: StringName, index: int)
+signal quick_action_requested(action: int, section: StringName, index: int)
 
 const DRAG_SECTION_KEY: StringName = &"from_section"
 const DRAG_INDEX_KEY: StringName = &"from_index"
+const DRAG_SOURCE_KIND_KEY: StringName = &"source_kind"
+const DRAG_SOURCE_INVENTORY: StringName = &"inventory"
+const DRAG_SOURCE_PENDING: StringName = &"pending"
+
+enum QuickActionMode {
+	NONE,
+	QUICK_EQUIP,
+	QUICK_SELL,
+	QUICK_WITHDRAW,
+}
 
 var inventory: Inventory
 var section: StringName = &""
@@ -15,8 +26,13 @@ var allow_drag_source: bool = true
 var allow_drop_target: bool = true
 var allow_quick_equip: bool = true
 var allow_hover_highlight: bool = false
+var quick_action_mode: QuickActionMode = QuickActionMode.QUICK_EQUIP
+var drag_source_kind: StringName = DRAG_SOURCE_INVENTORY
 var _is_selected: bool = false
 var _is_hovered: bool = false
+var _stack_provider: Callable = Callable()
+var _external_can_drop_checker: Callable = Callable()
+var _external_drop_handler: Callable = Callable()
 
 @onready var background: TextureRect = $Bg
 @onready var selected_frame: TextureRect = $SelectedFrame
@@ -43,6 +59,27 @@ func configure(target_inventory: Inventory, target_section: StringName, target_i
 	refresh()
 
 
+func set_quick_action_mode(mode: QuickActionMode) -> void:
+	quick_action_mode = mode
+
+
+func set_drag_source_kind(kind: StringName) -> void:
+	drag_source_kind = kind
+
+
+func set_stack_provider(provider: Callable = Callable()) -> void:
+	_stack_provider = provider
+	refresh()
+
+
+func set_external_drop_handlers(
+	can_drop_checker: Callable = Callable(),
+	drop_handler: Callable = Callable()
+) -> void:
+	_external_can_drop_checker = can_drop_checker
+	_external_drop_handler = drop_handler
+
+
 func set_interaction_flags(
 	mouse_enabled: bool,
 	drag_source_enabled: bool = true,
@@ -61,7 +98,9 @@ func set_interaction_flags(
 
 func refresh() -> void:
 	current_stack = null
-	if inventory != null:
+	if _stack_provider.is_valid():
+		current_stack = _stack_provider.call()
+	elif inventory != null:
 		current_stack = inventory.get_slot_stack(section, slot_index)
 
 	if current_stack == null or current_stack.is_empty():
@@ -91,10 +130,16 @@ func _gui_input(event: InputEvent) -> void:
 	if not mouse_button.pressed or mouse_button.button_index != MOUSE_BUTTON_LEFT:
 		return
 	if inventory == null:
-		return
+		if not mouse_button.shift_pressed:
+			return
 	if allow_quick_equip and mouse_button.shift_pressed and current_stack != null and not current_stack.is_empty():
-		quick_equip_requested.emit(section, slot_index)
+		if quick_action_mode == QuickActionMode.QUICK_EQUIP:
+			quick_equip_requested.emit(section, slot_index)
+		if quick_action_mode != QuickActionMode.NONE:
+			quick_action_requested.emit(quick_action_mode, section, slot_index)
 		accept_event()
+		return
+	if inventory == null:
 		return
 	if section == Inventory.SECTION_HOTBAR:
 		inventory.set_selected_hotbar_index(slot_index)
@@ -109,6 +154,7 @@ func _get_drag_data(_at_position: Vector2) -> Variant:
 	var preview: Control = _build_drag_preview()
 	set_drag_preview(preview)
 	return {
+		DRAG_SOURCE_KIND_KEY: drag_source_kind,
 		DRAG_SECTION_KEY: section,
 		DRAG_INDEX_KEY: slot_index,
 	}
@@ -117,6 +163,8 @@ func _get_drag_data(_at_position: Vector2) -> Variant:
 func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
 	if not allow_drop_target:
 		return false
+	if _external_can_drop_checker.is_valid():
+		return bool(_external_can_drop_checker.call(data))
 	if inventory == null:
 		return false
 	if typeof(data) != TYPE_DICTIONARY:
@@ -126,6 +174,9 @@ func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
 
 func _drop_data(_at_position: Vector2, data: Variant) -> void:
 	if not allow_drop_target:
+		return
+	if _external_drop_handler.is_valid():
+		_external_drop_handler.call(data)
 		return
 	if inventory == null or typeof(data) != TYPE_DICTIONARY:
 		return

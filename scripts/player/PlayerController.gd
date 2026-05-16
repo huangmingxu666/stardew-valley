@@ -32,6 +32,12 @@ func _ready() -> void:
 	_on_facing_changed(facing_direction)
 
 func _input(event: InputEvent) -> void:
+	var key_event: InputEventKey = event as InputEventKey
+	if key_event != null and key_event.pressed and not key_event.echo and key_event.keycode == KEY_ESCAPE:
+		if request_close_all_ui():
+			get_viewport().set_input_as_handled()
+			return
+
 	if SceneTransition.is_input_locked():
 		return
 
@@ -175,6 +181,29 @@ func hide_tool_frame() -> void:
 
 	visual.hide_tool()
 
+func request_open_shipping_panel() -> bool:
+	var player_ui_root: PlayerUiRoot = _resolve_player_ui_root()
+	if player_ui_root == null or not player_ui_root.has_method("open_shipping_panel"):
+		return false
+
+	player_ui_root.call("open_shipping_panel")
+	return true
+
+func request_close_all_ui() -> bool:
+	var player_ui_root: PlayerUiRoot = _resolve_player_ui_root()
+	if player_ui_root == null:
+		return false
+
+	if player_ui_root.has_method("close_all_panels"):
+		var result: Variant = player_ui_root.call("close_all_panels")
+		return bool(result)
+
+	if player_ui_root.has_method("close_shipping_panel"):
+		player_ui_root.call("close_shipping_panel")
+		return true
+
+	return false
+
 func get_current_tool_use_duration() -> float:
 	if visual == null:
 		return 0.0
@@ -305,3 +334,21 @@ func _has_visible_inventory_panel(root: Node) -> bool:
 			return true
 
 	return false
+
+func _resolve_player_ui_root() -> PlayerUiRoot:
+	var current_scene: Node = get_tree().current_scene
+	if current_scene == null:
+		return null
+
+	return _find_player_ui_root(current_scene)
+
+func _find_player_ui_root(root: Node) -> PlayerUiRoot:
+	if root is PlayerUiRoot:
+		return root as PlayerUiRoot
+
+	for child: Node in root.get_children():
+		var resolved: PlayerUiRoot = _find_player_ui_root(child)
+		if resolved != null:
+			return resolved
+
+	return null

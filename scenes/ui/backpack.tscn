@@ -16,7 +16,7 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -325.0
 offset_top = -225.0
-offset_right = 325.0
+offset_right = 315.0
 offset_bottom = -15.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -31,9 +31,9 @@ patch_margin_bottom = 10
 [node name="GridContainer" type="GridContainer" parent="." unique_id=1247999217]
 layout_mode = 1
 offset_left = 22.0
-offset_top = 15.0
+offset_top = 18.0
 offset_right = 698.0
-offset_bottom = 215.0
+offset_bottom = 218.0
 columns = 10
 metadata/_edit_use_anchors_ = true
 

@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="CropData" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/CropData.gd" id="1"]
+[ext_resource type="Resource" path="res://resources/items/Plant/Tomato/tomato_seed.tres" id="2"]
+[ext_resource type="Resource" path="res://resources/items/Plant/Tomato/tomato.tres" id="3"]
+[ext_resource type="Texture2D" path="res://assets/Object/Plant/Tomato/Tomato_Growth_Stages_32x32.png" id="4"]
+
+[resource]
+script = ExtResource("1")
+id = &"tomato_crop"
+display_name = "番茄"
+description = "普通番茄作物。当前按不可反复收获配置。"
+seed_item = ExtResource("2")
+harvest_item = ExtResource("3")
+growth_texture = ExtResource("4")
+growth_frame_size = Vector2i(32, 32)
+growth_frame_count = 7
+stage_frame_counts = PackedInt32Array(1, 3, 3)
+days_per_stage = PackedInt32Array(2, 2, 2)
+regrowable = false
+regrow_days = 0
+harvest_yield_min = 1
+harvest_yield_max = 1
+seasons = PackedStringArray("spring", "summer")
+metadata = {
+"mature_item_id": &"tomato",
+"seed_item_id": &"tomato_seed"
+}

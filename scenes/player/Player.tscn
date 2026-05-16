@@ -13,8 +13,8 @@
 [ext_resource type="Script" uid="uid://beak275xetulk" path="res://scripts/player/FrameAnimationClip.gd" id="9"]
 [ext_resource type="Script" uid="uid://2j5defyg5ikr" path="res://scripts/player/state_machine/PlayerToolUseState.gd" id="10"]
 [ext_resource type="Resource" uid="uid://ba1ssn4378u67" path="res://resources/tools/axe.tres" id="11"]
-[ext_resource type="Resource" path="res://resources/tools/fishing_rod.tres" id="12"]
-[ext_resource type="Resource" path="res://resources/tools/shovel.tres" id="13"]
+[ext_resource type="Resource" uid="uid://caff6i0t8gcm0" path="res://resources/tools/fishing_rod.tres" id="12"]
+[ext_resource type="Resource" uid="uid://by0t4fqkdns8b" path="res://resources/tools/shovel.tres" id="13"]
 [ext_resource type="Resource" uid="uid://bs0lvouyhisip" path="res://resources/tools/watering_can.tres" id="14"]
 
 [sub_resource type="CapsuleShape2D" id="1"]
@@ -138,7 +138,7 @@ shape = SubResource("2")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1958531366]
 position = Vector2(0, -16)
-zoom = Vector2(2, 2)
+zoom = Vector2(1.2, 1.2)
 
 [node name="ToolController" type="Node" parent="." unique_id=1405906045]
 script = ExtResource("4")

@@ -4,8 +4,8 @@ class_name PlayerUiRoot
 @export var debug_gold_amount: int = 250
 
 const SAMPLE_ITEM_DEFINITIONS: Array[Dictionary] = [
-	{"id": "turnip", "name": "Turnip", "icon": "res://assets/Icon/Singles_Icons_32x32_Crops_Turnip.png", "quantity": 12},
-	{"id": "carrot_seed", "name": "Carrot Seeds", "icon": "res://assets/Icon/Singles_Icons_32x32_Seed_Bags_Carrot.png", "quantity": 18},
+	{"resource": "res://resources/items/Plant/Tomato/tomato.tres", "quantity": 12},
+	{"resource": "res://resources/items/Plant/Tomato/tomato_seed.tres", "quantity": 18},
 	{"id": "apple", "name": "Apple", "icon": "res://assets/Icon/Singles_Icons_32x32_Crops_Apple.png", "quantity": 6},
 	{"id": "pumpkin", "name": "Pumpkin", "icon": "res://assets/Icon/Singles_Icons_32x32_Crops_Pumpkin.png", "quantity": 4},
 	{"id": "corn_seed", "name": "Corn Seeds", "icon": "res://assets/Icon/Singles_Icons_32x32_Seed_Bags_Corn.png", "quantity": 15},
@@ -18,6 +18,7 @@ const SAMPLE_ITEM_DEFINITIONS: Array[Dictionary] = [
 	{"id": "onion_seed", "name": "Onion Seeds", "icon": "res://assets/Icon/Singles_Icons_32x32_Seed_Bags_Onion.png", "quantity": 14},
 ]
 const INVENTORY_INPUT_LOCK_REASON: StringName = &"inventory_panel"
+const SHIPPING_INPUT_LOCK_REASON: StringName = &"shipping_panel"
 
 var inventory: Inventory
 var time_manager: TimeManager
@@ -26,9 +27,11 @@ var game_state
 
 @onready var hud: HUDController = $HUD
 @onready var inventory_panel: InventoryPanelUI = $InventoryPanel
+@onready var shop_panel: ShopPanelUI = $ShopPanel
 
 
 func _ready() -> void:
+	visible = true
 	inventory = _resolve_inventory()
 	time_manager = _resolve_time_manager()
 	tool_controller = _find_first_tool_controller(get_tree().current_scene)
@@ -45,6 +48,12 @@ func _ready() -> void:
 		inventory_panel.setup(inventory, game_state)
 		inventory_panel.visible = false
 		_sync_inventory_input_lock()
+		_sync_hotbar_visibility()
+
+	if shop_panel != null:
+		shop_panel.setup(inventory)
+		shop_panel.visible = false
+		_sync_shipping_input_lock()
 		_sync_hotbar_visibility()
 
 	if game_state != null and game_state.get_current_cash() == 0 and game_state.get_total_cash() == 0 and debug_gold_amount > 0:
@@ -64,11 +73,17 @@ func _unhandled_input(event: InputEvent) -> void:
 	if key_event == null or not key_event.pressed or key_event.echo:
 		return
 
+	if key_event.keycode == KEY_ESCAPE:
+		if close_all_panels():
+			get_viewport().set_input_as_handled()
+		return
+
 	if key_event.keycode == KEY_TAB:
 		if inventory_panel != null:
-			inventory_panel.visible = not inventory_panel.visible
-			_sync_inventory_input_lock()
-			_sync_hotbar_visibility()
+			if inventory_panel.visible:
+				close_inventory_panel()
+			else:
+				open_inventory_panel()
 		get_viewport().set_input_as_handled()
 		return
 
@@ -188,6 +203,13 @@ func _seed_hotbar_samples() -> void:
 
 func _build_sample_stack(sample_index: int) -> ItemStack:
 	var definition: Dictionary = SAMPLE_ITEM_DEFINITIONS[sample_index % SAMPLE_ITEM_DEFINITIONS.size()]
+	var item_resource_path_variant: Variant = definition.get("resource", "")
+	var item_resource_path: String = String(item_resource_path_variant)
+	if not item_resource_path.is_empty():
+		var item_data: ItemData = load(item_resource_path) as ItemData
+		if item_data != null:
+			return ItemStack.from_item_data(item_data, int(definition.get("quantity", 1)))
+
 	var sample_stack: ItemStack = ItemStack.new()
 	sample_stack.item_id = StringName(String(definition["id"]))
 	sample_stack.display_name = String(definition["name"])
@@ -198,6 +220,48 @@ func _build_sample_stack(sample_index: int) -> ItemStack:
 	return sample_stack
 
 
+func open_inventory_panel() -> void:
+	if inventory_panel == null:
+		return
+
+	visible = true
+	if shop_panel != null and shop_panel.visible:
+		close_shipping_panel()
+
+	inventory_panel.visible = true
+	_sync_inventory_input_lock()
+	_sync_hotbar_visibility()
+
+
+func close_inventory_panel() -> void:
+	if inventory_panel == null:
+		return
+
+	inventory_panel.visible = false
+	_sync_inventory_input_lock()
+	_sync_hotbar_visibility()
+
+
+func close_all_panels() -> bool:
+	var did_close: bool = false
+
+	if inventory_panel != null and inventory_panel.visible:
+		close_inventory_panel()
+		did_close = true
+
+	if has_method("close_shipping_panel"):
+		var shipping_closed: Variant = call("close_shipping_panel")
+		if shipping_closed is bool and shipping_closed:
+			did_close = true
+
+	if has_method("close_shop_panel"):
+		var shop_closed: Variant = call("close_shop_panel")
+		if shop_closed is bool and shop_closed:
+			did_close = true
+
+	return did_close
+
+
 func _sync_inventory_input_lock() -> void:
 	if inventory_panel != null and inventory_panel.visible:
 		SceneTransition.acquire_input_lock(INVENTORY_INPUT_LOCK_REASON)
@@ -206,11 +270,53 @@ func _sync_inventory_input_lock() -> void:
 	SceneTransition.release_input_lock(INVENTORY_INPUT_LOCK_REASON)
 
 
+func _sync_shipping_input_lock() -> void:
+	if shop_panel != null and shop_panel.visible:
+		SceneTransition.acquire_input_lock(SHIPPING_INPUT_LOCK_REASON)
+		return
+
+	SceneTransition.release_input_lock(SHIPPING_INPUT_LOCK_REASON)
+
+
 func _sync_hotbar_visibility() -> void:
 	if hud == null:
 		return
-	var should_show_hotbar: bool = inventory_panel == null or not inventory_panel.visible
+	var should_show_hotbar: bool = true
+	if inventory_panel != null and inventory_panel.visible:
+		should_show_hotbar = false
+	if shop_panel != null and shop_panel.visible:
+		should_show_hotbar = false
 	hud.set_hotbar_visible(should_show_hotbar)
+
+
+func open_shipping_panel() -> void:
+	if shop_panel == null:
+		return
+
+	visible = true
+	if inventory_panel != null:
+		inventory_panel.visible = false
+		_sync_inventory_input_lock()
+
+	shop_panel.visible = true
+	_sync_shipping_input_lock()
+	_sync_hotbar_visibility()
+
+
+func close_shipping_panel() -> bool:
+	if shop_panel == null:
+		return false
+	if not shop_panel.visible:
+		return false
+
+	shop_panel.visible = false
+	_sync_shipping_input_lock()
+	_sync_hotbar_visibility()
+	return true
+
+
+func is_shipping_panel_open() -> bool:
+	return shop_panel != null and shop_panel.visible
 
 
 func _keycode_to_hotbar_index(keycode: Key) -> int:

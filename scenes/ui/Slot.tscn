@@ -54,12 +54,12 @@ layout_mode = 1
 anchors_preset = 0
 
 [node name="Icon" type="TextureRect" parent="Overlay" unique_id=964779923]
-custom_minimum_size = Vector2(40, 40)
+custom_minimum_size = Vector2(36, 36)
 layout_mode = 0
-offset_left = 8.0
-offset_top = 8.0
-offset_right = 48.0
-offset_bottom = 48.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 46.0
+offset_bottom = 46.0
 mouse_behavior_recursive = 1
 
 [node name="CountLabel" type="Label" parent="Overlay" unique_id=212615661]

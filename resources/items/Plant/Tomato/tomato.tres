@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/ItemData.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/Object/Plant/Tomato/Singles_Icons_32x32_Crops_Tomato.png" id="2"]
+
+[resource]
+script = ExtResource("1")
+id = &"tomato"
+display_name = "番茄"
+description = "成熟采收后的番茄。当前按单个 200 金币出售。"
+icon_texture = ExtResource("2")
+stackable = true
+max_stack = 64
+item_kind = 2
+buy_price = 0
+sell_price = 200
+metadata = {
+"crop_id": &"tomato_crop"
+}

@@ -42,6 +42,7 @@ func _collect_slots() -> void:
 			section = Inventory.SECTION_HOTBAR
 			slot_index = visual_index - hotbar_start_index
 		slot_ui.configure(inventory, section, slot_index)
+		slot_ui.set_quick_action_mode(SlotUI.QuickActionMode.QUICK_EQUIP)
 		if not slot_ui.quick_equip_requested.is_connected(_on_quick_equip_requested):
 			slot_ui.quick_equip_requested.connect(_on_quick_equip_requested)
 		_slot_controls.append(slot_ui)

@@ -25,6 +25,8 @@ const DAYS_PER_SEASON: int = 28
 const DAYS_PER_WEEK: int = 7
 const FAINT_HOUR: int = 2
 const FAINT_MINUTE: int = 0
+const SHIPPING_MANAGER_PATH: String = "/root/ShippingManager"
+const GAME_STATE_PATH: String = "/root/GameState"
 const WEEKDAY_LABELS: Array[String] = [
 	"星期一",
 	"星期二",
@@ -58,6 +60,8 @@ func _ready() -> void:
 	current_minute = starting_minute
 	_last_emitted_hour = current_hour
 	_last_emitted_season = get_current_season()
+	if not day_started.is_connected(_on_day_started):
+		day_started.connect(_on_day_started)
 	time_changed.emit(current_day, current_hour, current_minute)
 	hour_changed.emit(current_day, current_hour)
 
@@ -224,3 +228,34 @@ func _emit_season_changed_if_needed(previous_season: StringName) -> void:
 
 	_last_emitted_season = current_season
 	season_changed.emit(current_season, get_current_season_index())
+
+
+func _on_day_started(_day: int) -> void:
+	commit_shipping_sales()
+
+
+func commit_shipping_sales() -> void:
+	var shipping_manager: Node = get_node_or_null(SHIPPING_MANAGER_PATH)
+	if shipping_manager == null or not shipping_manager.has_method("commit_pending_sales"):
+		return
+
+	var committed_sales: Variant = shipping_manager.call("commit_pending_sales")
+	var cash_to_add: int = _sales_value_to_cash(committed_sales)
+	if cash_to_add <= 0:
+		return
+
+	var game_state: Node = get_node_or_null(GAME_STATE_PATH)
+	if game_state == null or not game_state.has_method("add_cash"):
+		return
+
+	game_state.call("add_cash", cash_to_add)
+
+
+func _sales_value_to_cash(value: Variant) -> int:
+	match typeof(value):
+		TYPE_INT:
+			return max(int(value), 0)
+		TYPE_FLOAT:
+			return max(floori(float(value)), 0)
+		_:
+			return 0

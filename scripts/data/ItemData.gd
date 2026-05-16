@@ -16,6 +16,7 @@ enum ItemKind {
 @export var stackable: bool = true
 @export_range(1, 999, 1) var max_stack: int = 99
 @export var item_kind: ItemKind = ItemKind.GENERIC
+@export_range(0, 99999, 1) var buy_price: int = 0
 @export_range(0, 99999, 1) var sell_price: int = 0
 @export var metadata: Dictionary = {}
 

@@ -41,7 +41,10 @@ func can_interact(_player: PlayerController) -> bool:
 
 
 func interact(_player: PlayerController) -> void:
-	print("Shipping bin interacted: test success")
+	if _player == null:
+		return
+
+	_player.request_open_shipping_panel()
 
 
 func _on_body_entered(body: Node) -> void:
