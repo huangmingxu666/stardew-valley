@@ -21,6 +21,7 @@ var facing_locked: bool = false
 var pressed_order: Array[StringName] = []
 var interact_requested: bool = false
 var tool_use_requested: bool = false
+var _resolved_inventory: Inventory
 
 @onready var visual: PlayerVisual = $Visual
 @onready var interactor: PlayerInteractor = $PlayerInteractor
@@ -28,13 +29,14 @@ var tool_use_requested: bool = false
 @onready var state_machine: PlayerStateMachine = $StateMachine
 
 func _ready() -> void:
+	_resolved_inventory = _find_first_inventory(get_tree().current_scene)
 	facing_changed.connect(_on_facing_changed)
 	_on_facing_changed(facing_direction)
 
 func _input(event: InputEvent) -> void:
 	var key_event: InputEventKey = event as InputEventKey
 	if key_event != null and key_event.pressed and not key_event.echo and key_event.keycode == KEY_ESCAPE:
-		if request_close_all_ui():
+		if request_close_shipping_panel() or request_close_all_ui():
 			get_viewport().set_input_as_handled()
 			return
 
@@ -167,7 +169,24 @@ func try_interact() -> bool:
 	if interactor == null:
 		return false
 
-	return interactor.try_interact(self)
+	# 优先尝试交互对象（门、床、出货箱等）
+	if interactor.try_interact(self):
+		return true
+
+	# 没有交互对象时，尝试收获面前的成熟作物
+	return _try_harvest_at_target()
+
+
+func _try_harvest_at_target() -> bool:
+	if tool_controller == null or tool_controller.crop_registry == null:
+		return false
+
+	var target_cell: Vector2i = get_target_tile()
+	if not tool_controller.crop_registry.has_crop_at(target_cell):
+		return false
+
+	var result: Dictionary = tool_controller.crop_registry.harvest_crop(target_cell)
+	return result.get("success", false)
 
 func show_tool_use_frame(cycle_time: float) -> void:
 	if visual == null:
@@ -187,6 +206,16 @@ func request_open_shipping_panel() -> bool:
 		return false
 
 	player_ui_root.call("open_shipping_panel")
+	return true
+
+func request_close_shipping_panel() -> bool:
+	var player_ui_root: PlayerUiRoot = _resolve_player_ui_root()
+	if player_ui_root == null or not player_ui_root.has_method("close_shipping_panel"):
+		return false
+
+	var result: Variant = player_ui_root.call("close_shipping_panel")
+	if result is bool:
+		return result
 	return true
 
 func request_close_all_ui() -> bool:
@@ -234,7 +263,7 @@ func get_target_tile_at_distance(distance: float) -> Vector2i:
 	)
 
 func _draw() -> void:
-	if not debug_draw_target_tile:
+	if not _should_draw_target_tile_preview():
 		return
 
 	var target_tile: Vector2i = get_target_tile()
@@ -318,6 +347,33 @@ func _get_target_sample_distance(distance: float) -> float:
 	var advance_offset: float = float(tile_size) * target_tile_advance_ratio
 	return maxf(distance - advance_offset, 0.0)
 
+func _should_draw_target_tile_preview() -> bool:
+	if not debug_draw_target_tile:
+		return false
+	if SceneTransition.is_input_locked() or is_inventory_input_blocked():
+		return false
+
+	var selected_tool: ToolData = get_selected_tool_data()
+	if selected_tool != null:
+		return selected_tool.targets_tiles
+
+	var selected_stack: ItemStack = _get_selected_hotbar_stack()
+	if selected_stack == null or selected_stack.is_empty():
+		return false
+
+	var selected_item: ItemData = selected_stack.source_data as ItemData
+	if selected_item == null:
+		return false
+
+	return selected_item.item_kind == ItemData.ItemKind.SEED
+
+func _get_selected_hotbar_stack() -> ItemStack:
+	var inventory: Inventory = _resolve_inventory()
+	if inventory == null:
+		return null
+
+	return inventory.get_selected_hotbar_stack()
+
 func is_inventory_input_blocked() -> bool:
 	var current_scene: Node = get_tree().current_scene
 	if current_scene == null:
@@ -334,6 +390,30 @@ func _has_visible_inventory_panel(root: Node) -> bool:
 			return true
 
 	return false
+
+func _resolve_inventory() -> Inventory:
+	if _resolved_inventory != null and is_instance_valid(_resolved_inventory):
+		return _resolved_inventory
+
+	var current_scene: Node = get_tree().current_scene
+	if current_scene == null:
+		return null
+
+	_resolved_inventory = _find_first_inventory(current_scene)
+	return _resolved_inventory
+
+func _find_first_inventory(root: Node) -> Inventory:
+	if root == null:
+		return null
+	if root is Inventory:
+		return root as Inventory
+
+	for child: Node in root.get_children():
+		var resolved: Inventory = _find_first_inventory(child)
+		if resolved != null:
+			return resolved
+
+	return null
 
 func _resolve_player_ui_root() -> PlayerUiRoot:
 	var current_scene: Node = get_tree().current_scene

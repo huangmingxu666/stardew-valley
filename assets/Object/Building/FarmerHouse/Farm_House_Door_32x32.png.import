@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dkienq308n32"
-path="res://.godot/imported/Tomato_Growth_Stages_32x32.png-8f4a32e40dc6b06efffbb4e04c20751d.ctex"
+uid="uid://5xjwbxmnhleu"
+path="res://.godot/imported/Farm_House_Door_32x32.png-de5cf49a2ff61cc39111f7022fcd82df.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Object/Plant/Tomato/Tomato_Growth_Stages_32x32.png"
-dest_files=["res://.godot/imported/Tomato_Growth_Stages_32x32.png-8f4a32e40dc6b06efffbb4e04c20751d.ctex"]
+source_file="res://assets/Object/Building/FarmerHouse/Farm_House_Door_32x32.png"
+dest_files=["res://.godot/imported/Farm_House_Door_32x32.png-de5cf49a2ff61cc39111f7022fcd82df.ctex"]
 
 [params]
 

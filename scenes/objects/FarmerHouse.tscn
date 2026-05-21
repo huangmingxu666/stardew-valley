@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://c0splk453sbw8"]
 
-[ext_resource type="Texture2D" uid="uid://b1i0eoxlpx0r7" path="res://assets/Object/Building/Farmer_House/Farmer_House_1_32x32.png" id="1_house"]
-[ext_resource type="PackedScene" uid="uid://b574y81lbh18o" path="res://scenes/objects/Door.tscn" id="2_door"]
+[ext_resource type="Texture2D" uid="uid://b1i0eoxlpx0r7" path="res://assets/Object/Building/FarmerHouse/Farmer_House_1_32x32.png" id="1_87he4"]
+[ext_resource type="PackedScene" uid="uid://b574y81lbh18o" path="res://scenes/objects/Door.tscn" id="2_3txp6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
 size = Vector2(189.26955, 80.73508)
@@ -11,13 +11,14 @@ size = Vector2(189.26955, 80.73508)
 [node name="HouseSprite" type="Sprite2D" parent="." unique_id=236289852]
 texture_filter = 1
 position = Vector2(-128, -320)
-texture = ExtResource("1_house")
+texture = ExtResource("1_87he4")
 centered = false
 
-[node name="Door" parent="." unique_id=174039238 instance=ExtResource("2_door")]
+[node name="Door" parent="." unique_id=174039238 instance=ExtResource("2_3txp6")]
 position = Vector2(48, -32)
 destination_scene_path = "res://scenes/objects/FarmerHouseInterior.tscn"
 destination_spawn_marker = &"EntranceSpawn"
+record_current_scene_as_return = true
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=2053721045]
 position = Vector2(0, -8)

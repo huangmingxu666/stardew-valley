@@ -11,15 +11,18 @@ const DEFAULT_TOOL_RESOURCE_PATHS: Array[String] = [
 	"res://resources/tools/fishing_rod.tres",
 	"res://resources/tools/shovel.tres",
 	"res://resources/tools/watering_can.tres",
+	"res://resources/tools/bare_hands.tres",
 ]
 
 @export var tool_definitions: Array[ToolData] = []
 @export_node_path("FarmGrid") var farm_grid_path: NodePath
+@export_node_path("CropRegistry") var crop_registry_path: NodePath
 @export var starting_tool_id: StringName = &""
 @export var use_legacy_slot_input: bool = false
 
 var player: PlayerController
 var farm_grid: FarmGrid
+var crop_registry: CropRegistry
 var selected_tool_id: StringName = &""
 var _tools_by_id: Dictionary = {}
 var _tool_ids_by_slot: Dictionary = {}
@@ -29,6 +32,7 @@ func _ready() -> void:
 	_load_default_tool_definitions_if_needed()
 	_rebuild_registry()
 	_resolve_farm_grid()
+	_resolve_crop_registry()
 	_select_starting_tool()
 
 func use_current_tool() -> bool:
@@ -159,16 +163,61 @@ func _apply_selected_tool_visual(tool_data: ToolData) -> void:
 	player.set_selected_tool_data(tool_data)
 
 func _apply_default_tool_action(tool_data: ToolData, target_cell: Vector2i) -> bool:
-	if farm_grid == null:
-		return false
-
 	match tool_data.primary_action:
 		ToolData.ToolAction.TILL_SOIL:
-			return farm_grid.till_cell(target_cell)
+			if crop_registry != null and crop_registry.has_crop_at(target_cell):
+				crop_registry.destroy_crop(target_cell)
+				return true
+			if farm_grid != null:
+				return farm_grid.till_cell(target_cell)
+			return false
+
 		ToolData.ToolAction.WATER_SOIL:
-			return farm_grid.water_cell(target_cell)
+			var any_success: bool = false
+			if crop_registry != null:
+				var crop_result: Dictionary = crop_registry.water_crop(target_cell)
+				any_success = crop_result.get("success", false) or any_success
+			if farm_grid != null:
+				any_success = farm_grid.water_cell(target_cell) or any_success
+			return any_success
+
+		ToolData.ToolAction.HARVEST:
+			if crop_registry == null:
+				return false
+			var harvest_result: Dictionary = crop_registry.harvest_crop(target_cell)
+			return harvest_result.get("success", false)
+
+		ToolData.ToolAction.DESTROY_CROP:
+			if crop_registry == null:
+				return false
+			var destroy_result: Dictionary = crop_registry.destroy_crop(target_cell)
+			return destroy_result.get("success", false)
+
 		_:
 			return false
+
+func _resolve_crop_registry() -> void:
+	if not crop_registry_path.is_empty():
+		crop_registry = get_node_or_null(crop_registry_path) as CropRegistry
+		if crop_registry != null:
+			return
+
+	var current_scene: Node = get_tree().current_scene
+	if current_scene == null:
+		return
+
+	crop_registry = _find_crop_registry(current_scene)
+
+func _find_crop_registry(root: Node) -> CropRegistry:
+	if root is CropRegistry:
+		return root as CropRegistry
+
+	for child: Node in root.get_children():
+		var resolved: CropRegistry = _find_crop_registry(child)
+		if resolved != null:
+			return resolved
+
+	return null
 
 func _resolve_farm_grid() -> void:
 	if not farm_grid_path.is_empty():

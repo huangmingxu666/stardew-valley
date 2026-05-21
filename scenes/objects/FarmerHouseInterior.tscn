@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dw6hgg0tu8f17"]
 
-[ext_resource type="Texture2D" uid="uid://cv53uekm7lqjc" path="res://assets/Object/Building/Farmer_House/Japanese_Home_1_Layer_1_32x32.png" id="1_s2edq"]
+[ext_resource type="Texture2D" uid="uid://cv53uekm7lqjc" path="res://assets/Object/Building/FarmerHouse/Japanese_Home_1_Layer_1_32x32.png" id="1_s2edq"]
 [ext_resource type="TileSet" uid="uid://5jdmkhyet53d" path="res://resources/Tileset/Furniture_Tileset.tres" id="1_yqpat"]
 [ext_resource type="PackedScene" uid="uid://clv2hmtmkv4du" path="res://scenes/player/Player.tscn" id="3_lejw5"]
 [ext_resource type="Script" uid="uid://bbxqp350pvrs2" path="res://scripts/world/SceneSpawnController.gd" id="5_qpsik"]
@@ -138,6 +138,7 @@ collision_layer = 0
 script = ExtResource("6_k8n0r")
 destination_scene_path = "res://scenes/world/Farm.tscn"
 destination_spawn_marker = &"HouseExteriorSpawn"
+use_recorded_return_scene = true
 
 [node name="LeaveCollision" type="CollisionShape2D" parent="Boudary/LeaveArea" unique_id=112962763]
 position = Vector2(191.83838, 421.9104)

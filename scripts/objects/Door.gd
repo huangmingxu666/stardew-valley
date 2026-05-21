@@ -3,6 +3,7 @@ class_name Door
 
 @export_file("*.tscn") var destination_scene_path: String = ""
 @export var destination_spawn_marker: StringName = &""
+@export var record_current_scene_as_return: bool = false
 @export var frame_duration: float = 0.05
 @export_range(1, 32, 1) var frame_count: int = 7
 @export var closed_frame: int = 0
@@ -36,6 +37,10 @@ func interact(_player: PlayerController) -> void:
 	SceneTransition.lock_input_for_seconds(SceneTransition.TRANSITION_INPUT_LOCK_SECONDS)
 	if _player != null:
 		_player.clear_input_state()
+	if record_current_scene_as_return:
+		var current_scene: Node = get_tree().current_scene
+		if current_scene != null:
+			SceneTransition.record_return_scene(current_scene.scene_file_path)
 
 	if play_open_animation and door_visible and door_sprite != null:
 		await _play_open_animation()

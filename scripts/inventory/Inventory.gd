@@ -50,6 +50,53 @@ func clear_slot(section: StringName, index: int) -> void:
 	set_stack(section, index, null)
 
 
+func add_item_data(item_data: ItemData, amount: int = 1) -> Dictionary:
+	var stack: ItemStack = ItemStack.from_item_data(item_data, amount)
+	if stack == null:
+		return {
+			"success": false,
+			"fully_added": false,
+			"added_quantity": 0,
+			"remaining_quantity": max(amount, 0),
+		}
+
+	return add_stack(stack)
+
+
+func add_stack(stack: ItemStack, preferred_sections: Array[StringName] = []) -> Dictionary:
+	if stack == null or stack.is_empty():
+		return {
+			"success": false,
+			"fully_added": false,
+			"added_quantity": 0,
+			"remaining_quantity": 0,
+		}
+
+	var source_quantity: int = stack.quantity
+	var remaining_quantity: int = source_quantity
+	var changed_slots: Array[Dictionary] = []
+	var section_order: Array[StringName] = _resolve_add_section_order(preferred_sections)
+
+	for section: StringName in section_order:
+		remaining_quantity = _merge_stack_into_section(section, stack, remaining_quantity, changed_slots)
+		if remaining_quantity <= 0:
+			break
+
+	for section: StringName in section_order:
+		remaining_quantity = _place_stack_into_empty_slots(section, stack, remaining_quantity, changed_slots)
+		if remaining_quantity <= 0:
+			break
+
+	_emit_add_stack_changes(changed_slots)
+
+	return {
+		"success": remaining_quantity < source_quantity,
+		"fully_added": remaining_quantity <= 0,
+		"added_quantity": source_quantity - remaining_quantity,
+		"remaining_quantity": remaining_quantity,
+	}
+
+
 func move_or_swap_stack(
 	from_section: StringName,
 	from_index: int,
@@ -186,3 +233,101 @@ func _find_first_empty_index(slots: Array[ItemStack]) -> int:
 		if stack == null or stack.is_empty():
 			return index
 	return -1
+
+
+func _resolve_add_section_order(preferred_sections: Array[StringName]) -> Array[StringName]:
+	if not preferred_sections.is_empty():
+		return preferred_sections
+
+	return [
+		SECTION_BACKPACK,
+		SECTION_HOTBAR,
+	]
+
+
+func _merge_stack_into_section(
+	section: StringName,
+	source_stack: ItemStack,
+	remaining_quantity: int,
+	changed_slots: Array[Dictionary]
+) -> int:
+	var slots: Array[ItemStack] = _get_section_slots(section)
+	if slots.is_empty():
+		return remaining_quantity
+
+	for index: int in range(slots.size()):
+		if remaining_quantity <= 0:
+			break
+
+		var target_stack: ItemStack = slots[index]
+		if target_stack == null or not source_stack.can_merge_with(target_stack):
+			continue
+
+		var transfer_amount: int = mini(remaining_quantity, target_stack.remaining_capacity())
+		if transfer_amount <= 0:
+			continue
+
+		target_stack.quantity += transfer_amount
+		remaining_quantity -= transfer_amount
+		_record_changed_slot(changed_slots, section, index)
+
+	return remaining_quantity
+
+
+func _place_stack_into_empty_slots(
+	section: StringName,
+	source_stack: ItemStack,
+	remaining_quantity: int,
+	changed_slots: Array[Dictionary]
+) -> int:
+	var slots: Array[ItemStack] = _get_section_slots(section)
+	if slots.is_empty():
+		return remaining_quantity
+
+	for index: int in range(slots.size()):
+		if remaining_quantity <= 0:
+			break
+
+		var target_stack: ItemStack = slots[index]
+		if target_stack != null and not target_stack.is_empty():
+			continue
+
+		var placed_stack: ItemStack = source_stack.duplicate_stack()
+		placed_stack.quantity = mini(remaining_quantity, placed_stack.max_stack)
+		slots[index] = placed_stack
+		remaining_quantity -= placed_stack.quantity
+		_record_changed_slot(changed_slots, section, index)
+
+	return remaining_quantity
+
+
+func _record_changed_slot(changed_slots: Array[Dictionary], section: StringName, index: int) -> void:
+	for changed_slot: Dictionary in changed_slots:
+		if StringName(String(changed_slot.get("section", ""))) == section and int(changed_slot.get("index", -1)) == index:
+			return
+
+	changed_slots.append({
+		"section": String(section),
+		"index": index,
+	})
+
+
+func _emit_add_stack_changes(changed_slots: Array[Dictionary]) -> void:
+	if changed_slots.is_empty():
+		return
+
+	var changed_sections: Dictionary = {}
+	for changed_slot: Dictionary in changed_slots:
+		var section: StringName = StringName(String(changed_slot.get("section", "")))
+		var index: int = int(changed_slot.get("index", -1))
+		if index < 0:
+			continue
+
+		slot_changed.emit(section, index, get_slot_stack(section, index))
+		changed_sections[section] = true
+
+	for section_key: Variant in changed_sections.keys():
+		var section: StringName = StringName(String(section_key))
+		_emit_section_change(section)
+
+	inventory_changed.emit()

@@ -15,6 +15,8 @@ enum ToolAction {
 	TILL_SOIL,
 	WATER_SOIL,
 	FISH,
+	HARVEST,
+	DESTROY_CROP,
 }
 
 @export var id: StringName = &""

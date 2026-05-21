@@ -2,12 +2,13 @@
 
 [ext_resource type="TileSet" uid="uid://0qld43swwqt" path="res://resources/Tileset/Terrain_TileSet.tres" id="1_umcpx"]
 [ext_resource type="Script" uid="uid://b5f2sptle7d52" path="res://scripts/farm/FarmGrid.gd" id="2_0dbxj"]
-[ext_resource type="PackedScene" uid="uid://c0splk453sbw8" path="res://scenes/objects/farmer_home.tscn" id="3_771ck"]
+[ext_resource type="PackedScene" uid="uid://c0splk453sbw8" path="res://scenes/objects/FarmerHouse.tscn" id="3_771ck"]
 [ext_resource type="Script" uid="uid://drotu8yqbg814" path="res://scripts/farm/FarmMapController.gd" id="3_yo7ft"]
 [ext_resource type="PackedScene" uid="uid://clv2hmtmkv4du" path="res://scenes/player/Player.tscn" id="4_r6qdy"]
 [ext_resource type="Script" uid="uid://bbxqp350pvrs2" path="res://scripts/world/SceneSpawnController.gd" id="5_6r2jw"]
 [ext_resource type="PackedScene" uid="uid://bpaer0swyh0bl" path="res://scenes/objects/ShippingBin.tscn" id="6_4l61l"]
 [ext_resource type="PackedScene" uid="uid://dbpwbl0pr5nns" path="res://scenes/ui/PlayerUi.tscn" id="8_7qw0u"]
+[ext_resource type="Script" uid="uid://rgwyoifwlvxa" path="res://scripts/world/WorldDropManager.gd" id="9_dropmgr"]
 
 [node name="Farm" type="Node2D" unique_id=961235307]
 y_sort_enabled = true
@@ -80,4 +81,8 @@ player_path = NodePath("../../Prop/Player")
 default_spawn_path = NodePath("../../Markers/PlayerSpawn")
 spawn_markers_root_path = NodePath("../../Markers")
 
+[node name="WorldDropManager" type="Node" parent="Gameplay" unique_id=1227000001]
+script = ExtResource("9_dropmgr")
+
 [node name="Player_UI" parent="." unique_id=174535680 instance=ExtResource("8_7qw0u")]
+visible = false

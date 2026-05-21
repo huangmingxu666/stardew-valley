@@ -2,8 +2,8 @@
 
 [ext_resource type="TileSet" uid="uid://0qld43swwqt" path="res://resources/Tileset/Terrain_TileSet.tres" id="1_x2d1u"]
 [ext_resource type="PackedScene" uid="uid://clv2hmtmkv4du" path="res://scenes/player/Player.tscn" id="2_ep0om"]
-[ext_resource type="PackedScene" uid="uid://c0splk453sbw8" path="res://scenes/objects/farmer_home.tscn" id="3_emmh6"]
-[ext_resource type="PackedScene" path="res://scenes/objects/ShippingBin.tscn" id="4_cljrc"]
+[ext_resource type="PackedScene" uid="uid://c0splk453sbw8" path="res://scenes/objects/FarmerHouse.tscn" id="3_emmh6"]
+[ext_resource type="PackedScene" uid="uid://bpaer0swyh0bl" path="res://scenes/objects/ShippingBin.tscn" id="4_cljrc"]
 [ext_resource type="TileSet" uid="uid://vercxq8b1om3" path="res://resources/Tileset/House_Tileset.tres" id="5_dltb5"]
 [ext_resource type="Script" uid="uid://b5f2sptle7d52" path="res://scripts/farm/FarmGrid.gd" id="5_qofi2"]
 [ext_resource type="Script" uid="uid://drotu8yqbg814" path="res://scripts/farm/FarmMapController.gd" id="6_x4vrc"]

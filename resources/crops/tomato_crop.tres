@@ -1,22 +1,24 @@
 [gd_resource type="Resource" script_class="CropData" format=3 uid="uid://5f8cqe5ktqof"]
 
 [ext_resource type="Script" uid="uid://cxq2tjpja5rgm" path="res://scripts/data/CropData.gd" id="1"]
-[ext_resource type="Texture2D" uid="uid://coj3yk85ht0me" path="res://assets/Object/Plant/Tomato/Tomato_Growth_Stages_32x32.png" id="4"]
-
-[sub_resource type="Resource" id="Resource_qy4ml"]
-metadata/__load_path__ = "res://resources/items/tomato.tres"
-
-[sub_resource type="Resource" id="Resource_yqgl4"]
-metadata/__load_path__ = "res://resources/items/tomato_seed.tres"
+[ext_resource type="Texture2D" uid="uid://bglynf7flkkyt" path="res://assets/Object/Plant/Tomato/Seed_Tomato_32x32.png" id="3"]
+[ext_resource type="Texture2D" uid="uid://dkienq308n32" path="res://assets/Object/Plant/Tomato/Tomato_Growth_Stages_32x32.png" id="4"]
+[ext_resource type="Resource" path="res://resources/items/Plant/Tomato/tomato.tres" id="5_harvest"]
+[ext_resource type="Resource" path="res://resources/items/Plant/Tomato/tomato_seed.tres" id="6_seed"]
 
 [resource]
 script = ExtResource("1")
 id = &"tomato_crop"
 display_name = "番茄"
 description = "普通番茄作物。当前按不可反复收获配置。"
-seed_item = SubResource("Resource_yqgl4")
-harvest_item = SubResource("Resource_qy4ml")
+seed_item = ExtResource("6_seed")
+harvest_item = ExtResource("5_harvest")
+seed_texture = ExtResource("3")
 growth_texture = ExtResource("4")
+growth_frame_size = Vector2i(32, 64)
+growth_visual_offset = Vector2(0, -20)
+water_hint_offset = Vector2(-2, 0)
+harvest_hint_offset = Vector2(0, 20)
 growth_frame_count = 7
 stage_frame_counts = PackedInt32Array(1, 3, 3)
 days_per_stage = PackedInt32Array(2, 2, 2)

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ToolData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/ToolData.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"bare_hands"
+display_name = "Bare Hands"
+description = "Empty-hand interaction. Harvest mature crops and interact with the world."
+tool_kind = 0
+primary_action = 5
+slot_index = -1

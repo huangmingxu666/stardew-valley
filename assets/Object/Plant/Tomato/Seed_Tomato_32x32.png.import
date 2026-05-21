@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b5hci8omceh7m"
-path="res://.godot/imported/Japanese_interiors_Black_Shadow_32x32.png-78b2d98af23f5acce33a012de992ab43.ctex"
+uid="uid://bglynf7flkkyt"
+path="res://.godot/imported/Seed_Tomato_32x32.png-bd8a23780ec7ff84df49ce1caa849f95.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Object/Building/Farmer_House/Japanese_interiors_Black_Shadow_32x32.png"
-dest_files=["res://.godot/imported/Japanese_interiors_Black_Shadow_32x32.png-78b2d98af23f5acce33a012de992ab43.ctex"]
+source_file="res://assets/Object/Plant/Tomato/Seed_Tomato_32x32.png"
+dest_files=["res://.godot/imported/Seed_Tomato_32x32.png-bd8a23780ec7ff84df49ce1caa849f95.ctex"]
 
 [params]
 

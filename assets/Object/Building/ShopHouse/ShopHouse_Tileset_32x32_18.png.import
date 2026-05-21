@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bw8u6h8onlbp5"
-path="res://.godot/imported/Farmer_House_2_32x32.png-0f5fdb4e1be88e355a69ffea685bab7d.ctex"
+uid="uid://b28geo5yhlusn"
+path="res://.godot/imported/ShopHouse_Tileset_32x32_18.png-1989d847098cf00d237b6fdf2d34a158.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Object/Building/Farmer_House/Farmer_House_2_32x32.png"
-dest_files=["res://.godot/imported/Farmer_House_2_32x32.png-0f5fdb4e1be88e355a69ffea685bab7d.ctex"]
+source_file="res://assets/Object/Building/ShopHouse/ShopHouse_Tileset_32x32_18.png"
+dest_files=["res://.godot/imported/ShopHouse_Tileset_32x32_18.png-1989d847098cf00d237b6fdf2d34a158.ctex"]
 
 [params]
 

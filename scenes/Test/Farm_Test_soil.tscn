@@ -1,16 +1,31 @@
-[gd_scene format=4 uid="uid://bvjlwkpfp2tmk"]
+[gd_scene format=4 uid="uid://b7yo4feclmepn"]
 
 [ext_resource type="Script" uid="uid://cttoxqk3k3wvp" path="res://scripts/farm/FarmTestSoilUpgradeController.gd" id="1_pf0e6"]
 [ext_resource type="TileSet" uid="uid://0qld43swwqt" path="res://resources/Tileset/Terrain_TileSet.tres" id="1_rvigv"]
 [ext_resource type="PackedScene" uid="uid://clv2hmtmkv4du" path="res://scenes/player/Player.tscn" id="2_pf0e6"]
 [ext_resource type="Texture2D" uid="uid://xbsupb7otrbf" path="res://icon.svg" id="2_rvigv"]
+[ext_resource type="PackedScene" uid="uid://dhimi6lfym76b" path="res://scenes/objects/Bed.tscn" id="3_testbed"]
 [ext_resource type="Script" uid="uid://b5f2sptle7d52" path="res://scripts/farm/FarmGrid.gd" id="3_y2rkm"]
 [ext_resource type="Script" uid="uid://drotu8yqbg814" path="res://scripts/farm/FarmMapController.gd" id="4_rktuy"]
+[ext_resource type="TileSet" uid="uid://vercxq8b1om3" path="res://resources/Tileset/House_Tileset.tres" id="5_lnfq2"]
 [ext_resource type="Script" uid="uid://bbxqp350pvrs2" path="res://scripts/world/SceneSpawnController.gd" id="5_qdqct"]
+[ext_resource type="Script" uid="uid://bw8st07lb8jv6" path="res://scripts/crops/CropRegistry.gd" id="6_cropreg"]
+[ext_resource type="PackedScene" uid="uid://dbpwbl0pr5nns" path="res://scenes/ui/PlayerUi.tscn" id="8_y2rkm"]
+[ext_resource type="Script" uid="uid://rgwyoifwlvxa" path="res://scripts/world/WorldDropManager.gd" id="9_dropmgr"]
 
 [node name="Farm_Test_Soil" type="Node2D" unique_id=961235307]
 y_sort_enabled = true
 script = ExtResource("1_pf0e6")
+player_path = NodePath("Prop/Player")
+farm_grid_path = NodePath("Gameplay/FarmGrid")
+crop_registry_path = NodePath("Gameplay/CropRegistry")
+active_shoveled_layer_path = NodePath("Ground/ShoveledLayer")
+active_fence_layer_path = NodePath("Ground/FenceLayer")
+watered_overlay_layer_path = NodePath("Ground/WateredOverlayLayer")
+template_levels_root_path = NodePath("Ground")
+upgrade_markers_root_path = NodePath("Ground/Upgrade")
+fade_rect_path = NodePath("Player_UI/FadeRect")
+game_state_path = NodePath("/root/GameState")
 
 [node name="Ground" type="Node2D" parent="." unique_id=785777496]
 
@@ -26,6 +41,10 @@ tile_set = ExtResource("1_rvigv")
 tile_set = ExtResource("1_rvigv")
 
 [node name="ShoveledLayer" type="TileMapLayer" parent="Ground" unique_id=392694759]
+tile_set = ExtResource("1_rvigv")
+
+[node name="WateredOverlayLayer" type="TileMapLayer" parent="Ground" unique_id=1273660908]
+modulate = Color(0.52, 0.4, 0.28, 0.55)
 tile_set = ExtResource("1_rvigv")
 
 [node name="FenceLayer" type="TileMapLayer" parent="Ground" unique_id=75617442]
@@ -96,11 +115,19 @@ tile_set = ExtResource("1_rvigv")
 y_sort_enabled = true
 position = Vector2(552, 288)
 
+[node name="HouseLayer" type="TileMapLayer" parent="Prop" unique_id=583342894]
+y_sort_enabled = true
+tile_map_data = PackedByteArray("AAAuAA4AAAAAAAAAAQATAA8AAQAAAAAAAQA=")
+tile_set = ExtResource("5_lnfq2")
+
+[node name="TestBed" parent="Prop" unique_id=1863284512 instance=ExtResource("3_testbed")]
+position = Vector2(616, 440)
+
 [node name="Markers" type="Node2D" parent="." unique_id=1021360107]
 position = Vector2(755, 444)
 
 [node name="PlayerSpawn" type="Marker2D" parent="Markers" unique_id=1166649510]
-position = Vector2(45, -44)
+position = Vector2(-107, 76)
 
 [node name="HouseExteriorSpawn" type="Marker2D" parent="Markers" unique_id=449110737]
 position = Vector2(77, -292)
@@ -125,3 +152,25 @@ script = ExtResource("5_qdqct")
 player_path = NodePath("../../Prop/Player")
 default_spawn_path = NodePath("../../Markers/PlayerSpawn")
 spawn_markers_root_path = NodePath("../../Markers")
+
+[node name="CropRegistry" type="Node" parent="Gameplay" unique_id=1187549362]
+script = ExtResource("6_cropreg")
+farm_grid_path = NodePath("../FarmGrid")
+
+[node name="WorldDropManager" type="Node" parent="Gameplay" unique_id=1227000002]
+script = ExtResource("9_dropmgr")
+crop_registry_path = NodePath("../CropRegistry")
+
+[node name="Player_UI" type="CanvasLayer" parent="." unique_id=1425367890]
+
+[node name="FadeRect" type="ColorRect" parent="Player_UI" unique_id=1425367891]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0)
+
+[node name="Player_UI2" parent="Player_UI" unique_id=174535680 instance=ExtResource("8_y2rkm")]
+visible = false

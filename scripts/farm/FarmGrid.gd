@@ -5,6 +5,9 @@ signal tile_registered(cell: Vector2i, tile_state: FarmTileState)
 signal tile_state_changed(cell: Vector2i, tile_state: FarmTileState)
 signal grid_initialized()
 signal watered_tiles_cleared()
+signal crop_planted(cell: Vector2i, crop_id: StringName)
+signal crop_harvested(cell: Vector2i, crop_id: StringName, harvest_item_id: StringName, yield_count: int)
+signal crop_destroyed(cell: Vector2i, crop_id: StringName)
 
 @export var cell_size: Vector2i = Vector2i(32, 32)
 @export var origin: Vector2 = Vector2.ZERO
@@ -207,13 +210,14 @@ func can_plant_crop(cell: Vector2i) -> bool:
 	return state != null and state.can_plant()
 
 
-func plant_crop(cell: Vector2i, crop_id: StringName, crop_stage: int = 0) -> bool:
+func plant_crop(cell: Vector2i, crop_id: StringName, crop_stage: int = 0, crop_max_stage: int = FarmTileState.STAGE_NONE) -> bool:
 	var state: FarmTileState = get_tile_state(cell)
 	if state == null or not state.can_plant():
 		return false
 
-	state.set_crop(crop_id, crop_stage)
+	state.set_crop(crop_id, crop_stage, crop_max_stage)
 	tile_state_changed.emit(cell, state)
+	crop_planted.emit(cell, crop_id)
 	return true
 
 
@@ -235,6 +239,54 @@ func clear_crop(cell: Vector2i) -> bool:
 	state.clear_crop()
 	tile_state_changed.emit(cell, state)
 	return true
+
+
+func can_harvest_crop(cell: Vector2i) -> bool:
+	var state: FarmTileState = get_tile_state(cell)
+	return state != null and state.can_harvest()
+
+
+func harvest_crop(cell: Vector2i) -> Dictionary:
+	var state: FarmTileState = get_tile_state(cell)
+	if state == null or not state.can_harvest():
+		return _crop_error_result(&"harvest_blocked", "当前格子无法收获")
+
+	var harvested_crop_id: StringName = state.crop_id
+	state.clear_crop()
+	tile_state_changed.emit(cell, state)
+	crop_harvested.emit(cell, harvested_crop_id, harvested_crop_id, 1)
+	return {
+		"success": true,
+		"action": String(CropInstance.ACTION_HARVEST),
+		"crop_id": String(harvested_crop_id),
+		"crop_item_id": String(harvested_crop_id),
+		"yield_count": 1,
+		"cell_x": cell.x,
+		"cell_y": cell.y,
+	}
+
+
+func can_destroy_crop(cell: Vector2i) -> bool:
+	var state: FarmTileState = get_tile_state(cell)
+	return state != null and state.can_destroy_crop()
+
+
+func destroy_crop(cell: Vector2i) -> Dictionary:
+	var state: FarmTileState = get_tile_state(cell)
+	if state == null or not state.can_destroy_crop():
+		return _crop_error_result(&"destroy_blocked", "当前格子无可铲除的作物")
+
+	var destroyed_crop_id: StringName = state.crop_id
+	state.clear_crop()
+	tile_state_changed.emit(cell, state)
+	crop_destroyed.emit(cell, destroyed_crop_id)
+	return {
+		"success": true,
+		"action": String(CropInstance.ACTION_DESTROY),
+		"crop_id": String(destroyed_crop_id),
+		"cell_x": cell.x,
+		"cell_y": cell.y,
+	}
 
 
 func set_cell_blocked(cell: Vector2i, blocked: bool) -> void:
@@ -280,6 +332,14 @@ func import_state(entries: Array[Dictionary], clear_existing: bool = true) -> vo
 		_tile_states[state.cell] = state
 		tile_registered.emit(state.cell, state)
 		tile_state_changed.emit(state.cell, state)
+
+
+func _crop_error_result(error_code: StringName, message: String) -> Dictionary:
+	return {
+		"success": false,
+		"error_code": String(error_code),
+		"error_message": message,
+	}
 
 
 func _resolve_coordinate_layer() -> void:

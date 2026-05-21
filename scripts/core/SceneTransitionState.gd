@@ -8,6 +8,7 @@ var _pending_spawn_marker: StringName = &""
 var _scene_change_scheduled: bool = false
 var _input_locked_until_msec: int = 0
 var _manual_input_lock_reasons: Dictionary = {}
+var _recorded_return_scene_path: String = ""
 
 
 func travel_to_scene(scene_path: String, spawn_marker: StringName = &"") -> void:
@@ -22,6 +23,17 @@ func travel_to_scene(scene_path: String, spawn_marker: StringName = &"") -> void
 	lock_input_for_seconds(TRANSITION_INPUT_LOCK_SECONDS)
 	_scene_change_scheduled = true
 	call_deferred("_apply_scene_change")
+
+
+func record_return_scene(scene_path: String) -> void:
+	if scene_path.is_empty():
+		return
+
+	_recorded_return_scene_path = scene_path
+
+
+func get_recorded_return_scene() -> String:
+	return _recorded_return_scene_path
 
 
 func lock_input_for_seconds(duration_seconds: float) -> void:

@@ -1,3 +1,38 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://dlq02fcgtd7fd"]
 
-[node name="Crop" type="Node2D"]
+[ext_resource type="Script" uid="uid://b2w16mldwxmjc" path="res://scripts/crops/CropInstance.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://c0w0flid0k7jg" path="res://assets/UI/HintUI/Water_Drop_Outlined_32x32.png" id="2"]
+
+[node name="Crop" type="Node2D" unique_id=1533563765]
+script = ExtResource("1")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1219199135]
+
+[node name="WaterHint" type="Sprite2D" parent="." unique_id=1851000001]
+z_index = 20
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("2")
+
+[node name="HarvestHint" type="Node2D" parent="." unique_id=1851000002]
+visible = false
+z_index = 20
+
+[node name="SparkleTop" type="Sprite2D" parent="HarvestHint" unique_id=1851000003]
+modulate = Color(1, 0.98, 0.72, 0.95)
+position = Vector2(0, -6)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("2")
+
+[node name="SparkleLeft" type="Sprite2D" parent="HarvestHint" unique_id=1851000004]
+modulate = Color(1, 0.9, 0.62, 0.85)
+position = Vector2(-8, 4)
+rotation = -0.55
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("2")
+
+[node name="SparkleRight" type="Sprite2D" parent="HarvestHint" unique_id=1851000005]
+modulate = Color(1, 0.95, 0.7, 0.9)
+position = Vector2(9, 2)
+rotation = 0.45
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("2")

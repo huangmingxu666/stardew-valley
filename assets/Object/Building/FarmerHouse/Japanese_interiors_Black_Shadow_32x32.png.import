@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://5xjwbxmnhleu"
-path="res://.godot/imported/Farm_House_Door_32x32.png-0c179f2d8cbae56870f24cf9095ae2b5.ctex"
+uid="uid://b5hci8omceh7m"
+path="res://.godot/imported/Japanese_interiors_Black_Shadow_32x32.png-55ad836a5cf008522b1e451095d5f723.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Object/Building/Farmer_House/Farm_House_Door_32x32.png"
-dest_files=["res://.godot/imported/Farm_House_Door_32x32.png-0c179f2d8cbae56870f24cf9095ae2b5.ctex"]
+source_file="res://assets/Object/Building/FarmerHouse/Japanese_interiors_Black_Shadow_32x32.png"
+dest_files=["res://.godot/imported/Japanese_interiors_Black_Shadow_32x32.png-55ad836a5cf008522b1e451095d5f723.ctex"]
 
 [params]
 
