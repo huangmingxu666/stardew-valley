@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/ItemData.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/Icon/Singles_Icons_32x32_Seed_Bags_Chili_Pepper.png" id="2"]
+
+[resource]
+script = ExtResource("1")
+id = &"chili_pepper_seed"
+display_name = "辣椒种子"
+description = "一包辣椒种子。可以直接在商店购买。"
+icon_texture = ExtResource("2")
+max_stack = 64
+item_kind = 1
+buy_price = 45
+sell_price = 22
+metadata = {}

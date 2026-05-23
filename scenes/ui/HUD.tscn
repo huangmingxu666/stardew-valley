@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://dpdcahcw7kbra" path="res://scenes/ui/Slot.tscn" id="2_atyv1"]
 [ext_resource type="PackedScene" uid="uid://l7swfdrmq6md" path="res://scenes/ui/money.tscn" id="3_6ll6g"]
 [ext_resource type="Script" uid="uid://bovwcxyay5wt5" path="res://scripts/ui/HUD.gd" id="4_2eyv8"]
+[ext_resource type="FontFile" uid="uid://dc3osn1r8ynab" path="res://assets/Font/NotoSansCJK-Bold.otf" id="6_rnyu1"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kw0id"]
 atlas = ExtResource("1_kw0id")
@@ -25,6 +26,44 @@ region = Rect2(24, 600, 48, 48)
 [sub_resource type="AtlasTexture" id="AtlasTexture_6ll6g"]
 atlas = ExtResource("1_kw0id")
 region = Rect2(416, 738, 31, 30)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ahhjq"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 1, 1, 0.75)
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3kpod"]
+
+[sub_resource type="Theme" id="Theme_jlufg"]
+default_font = ExtResource("6_rnyu1")
+Label/colors/font_color = Color(0, 0, 0, 1)
+Label/colors/font_outline_color = Color(0.14, 0.14, 0.14, 1)
+Label/colors/font_shadow_color = Color(0, 0, 0, 0)
+Label/constants/line_spacing = 3
+Label/constants/outline_size = 0
+Label/constants/shadow_offset_x = 1
+Label/constants/shadow_offset_y = 1
+Label/constants/shadow_outline_size = 1
+Label/font_sizes/font_size = 16
+Label/fonts/font = ExtResource("6_rnyu1")
+Label/styles/focus = SubResource("StyleBoxFlat_ahhjq")
+Label/styles/normal = SubResource("StyleBoxEmpty_3kpod")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rnyu1"]
 atlas = ExtResource("1_kw0id")
@@ -286,6 +325,7 @@ theme_override_constants/separation = -2
 [node name="Money" parent="Root/TopRight/TopRightMoney/GridContainer/HBoxContainer/HBoxContainer" unique_id=421864145 instance=ExtResource("3_6ll6g")]
 layout_mode = 2
 size_flags_horizontal = 3
+theme = SubResource("Theme_jlufg")
 
 [node name="Money2" parent="Root/TopRight/TopRightMoney/GridContainer/HBoxContainer/HBoxContainer" unique_id=531433221 instance=ExtResource("3_6ll6g")]
 layout_mode = 2

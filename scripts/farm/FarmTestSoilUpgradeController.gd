@@ -605,13 +605,30 @@ func _resolve_crop_registry() -> CropRegistry:
 
 func _resolve_inventory() -> Inventory:
 	if not inventory_path.is_empty():
-		return get_node_or_null(inventory_path) as Inventory
+		var node = get_node_or_null(inventory_path)
+		if node is Inventory:
+			return node
 
-	return _find_first_inventory(get_tree().current_scene)
+	var local_inv = _find_first_inventory(get_tree().current_scene)
+	if local_inv != null:
+		return local_inv
+
+	var game_state_node = get_node_or_null("/root/GameState")
+	if game_state_node != null:
+		var global_inv = game_state_node.get_node_or_null("GlobalInventory")
+		if global_inv is Inventory:
+			return global_inv
+
+	return null
 
 
 func _configure_test_inventory() -> void:
 	if _inventory == null:
+		return
+
+	# 守卫：如果背包已有内容（非首次加载），跳过初始化
+	# 避免从商店/其他场景返回时覆盖玩家已有的物品
+	if _inventory_has_content():
 		return
 
 	for index: int in range(_inventory.hotbar_slots.size()):
@@ -637,6 +654,16 @@ func _configure_test_inventory() -> void:
 		_inventory.set_stack(Inventory.SECTION_BACKPACK, 0, ItemStack.from_item_data(tomato_item_data, 3))
 
 	_inventory.set_selected_hotbar_index(3)
+
+
+func _inventory_has_content() -> bool:
+	for index: int in range(_inventory.hotbar_slots.size()):
+		if _inventory.get_slot_stack(Inventory.SECTION_HOTBAR, index) != null:
+			return true
+	for index: int in range(_inventory.backpack_slots.size()):
+		if _inventory.get_slot_stack(Inventory.SECTION_BACKPACK, index) != null:
+			return true
+	return false
 
 
 func _find_first_crop_registry(root: Node) -> CropRegistry:

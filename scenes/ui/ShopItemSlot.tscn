@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://dij4w4xkmepbq"]
+
+[ext_resource type="Texture2D" uid="uid://cbnoo6vyougor" path="res://assets/UI/Modern_UI_Style_1_32x32.png" id="1_o8qbl"]
+[ext_resource type="Script" uid="uid://cat607kxt1kl3" path="res://scripts/ui/ShopItemSlot.gd" id="1_slot"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_amadf"]
+atlas = ExtResource("1_o8qbl")
+region = Rect2(116, 258, 56, 58)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jgnlh"]
+texture = SubResource("AtlasTexture_amadf")
+texture_margin_left = 12.0
+texture_margin_top = 14.0
+texture_margin_right = 12.0
+texture_margin_bottom = 12.0
+
+[node name="ShopItemSlot" type="PanelContainer" unique_id=1057735173]
+custom_minimum_size = Vector2(0, 52)
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_jgnlh")
+script = ExtResource("1_slot")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1932830059]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="IconRect" type="TextureRect" parent="HBoxContainer" unique_id=455253283]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_vertical = 4
+stretch_mode = 5
+
+[node name="NameLabel" type="Label" parent="HBoxContainer" unique_id=1842542454]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.247, 0.157, 0.078, 1)
+theme_override_font_sizes/font_size = 14
+text = "商品名称"
+vertical_alignment = 1
+
+[node name="PriceLabel" type="Label" parent="HBoxContainer" unique_id=1172638833]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.35, 0.23, 0.12, 1)
+theme_override_font_sizes/font_size = 14
+text = "999 金币"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="BuyButton" type="Button" parent="HBoxContainer" unique_id=470703193]
+custom_minimum_size = Vector2(80, 28)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 13
+text = "购买"

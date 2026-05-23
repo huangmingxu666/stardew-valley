@@ -175,11 +175,18 @@ func _resolve_inventory() -> Inventory:
 	if _resolved_inventory != null and is_instance_valid(_resolved_inventory):
 		return _resolved_inventory
 
-	var current_scene: Node = get_tree().current_scene
-	if current_scene == null:
-		return null
+	# 优先从全局 Autoload 获取
+	var game_state_node: Node = get_node_or_null("/root/GameState")
+	if game_state_node != null:
+		var global_inv: Node = game_state_node.get_node_or_null("GlobalInventory")
+		if global_inv is Inventory:
+			_resolved_inventory = global_inv
+			return _resolved_inventory
 
-	_resolved_inventory = _find_inventory(current_scene)
+	# 降级：搜索本地场景树
+	var current_scene: Node = get_tree().current_scene
+	if current_scene != null:
+		_resolved_inventory = _find_inventory(current_scene)
 	return _resolved_inventory
 
 

@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://cmm5o88bisohv" path="res://scripts/ui/PlayerUi.gd" id="2_ukrdq"]
 [ext_resource type="PackedScene" uid="uid://dhoueiyjv0w17" path="res://scenes/ui/InventoryPanel.tscn" id="3_sx4d4"]
 [ext_resource type="PackedScene" uid="uid://brere8vaxmi4a" path="res://scenes/ui/ShopPanel.tscn" id="4_shop"]
+[ext_resource type="PackedScene" path="res://scenes/ui/ShopBuyPanel.tscn" id="5_shop_buy"]
 
 [node name="Player_UI" type="CanvasLayer" unique_id=174535680]
 script = ExtResource("2_ukrdq")
@@ -13,3 +14,5 @@ script = ExtResource("2_ukrdq")
 [node name="InventoryPanel" parent="." unique_id=313897328 instance=ExtResource("3_sx4d4")]
 
 [node name="ShopPanel" parent="." unique_id=1366000352 instance=ExtResource("4_shop")]
+
+[node name="ShopBuyPanel" parent="." unique_id=1366000353 instance=ExtResource("5_shop_buy")]

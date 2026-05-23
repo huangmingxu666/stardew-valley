@@ -1,12 +1,13 @@
 [gd_scene format=3 uid="uid://p18rs5sabde5"]
 
-[ext_resource type="Script" uid="uid://bdvi5t8xic8bg" path="res://scripts/interaction/Interactable.gd" id="1_3o4wd"]
+[ext_resource type="Script" path="res://scripts/objects/ShopCounter.gd" id="1_3o4wd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3o4wd"]
 
 [node name="ShopCounter" type="Area2D" unique_id=1826585299]
+collision_layer = 4
+collision_mask = 0
 script = ExtResource("1_3o4wd")
-metadata/_custom_type_script = "uid://bdvi5t8xic8bg"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=705142812]
 shape = SubResource("RectangleShape2D_3o4wd")

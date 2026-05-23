@@ -19,6 +19,7 @@ const SAMPLE_ITEM_DEFINITIONS: Array[Dictionary] = [
 ]
 const INVENTORY_INPUT_LOCK_REASON: StringName = &"inventory_panel"
 const SHIPPING_INPUT_LOCK_REASON: StringName = &"shipping_panel"
+const SHOP_INPUT_LOCK_REASON: StringName = &"shop_panel"
 
 var inventory: Inventory
 var time_manager: TimeManager
@@ -28,6 +29,7 @@ var game_state
 @onready var hud: HUDController = $HUD
 @onready var inventory_panel: InventoryPanelUI = $InventoryPanel
 @onready var shop_panel: ShopPanelUI = $ShopPanel
+@onready var shop_buy_panel: Control = $ShopBuyPanel
 
 
 func _ready() -> void:
@@ -39,7 +41,9 @@ func _ready() -> void:
 
 	if inventory != null:
 		inventory.ensure_default_tool_loadout(_load_default_tools())
-		_seed_mock_backpack_if_needed()
+		# 只在背包完全为空时填充示例数据，避免覆盖玩家已有物品
+		if not _inventory_has_any_content(inventory):
+			_seed_mock_backpack_if_needed()
 
 	if hud != null:
 		hud.setup(inventory, time_manager, game_state)
@@ -54,6 +58,13 @@ func _ready() -> void:
 		shop_panel.setup(inventory)
 		shop_panel.visible = false
 		_sync_shipping_input_lock()
+		_sync_hotbar_visibility()
+
+	if shop_buy_panel != null:
+		shop_buy_panel.setup(null, inventory)
+		shop_buy_panel.visible = false
+		shop_buy_panel.close_requested.connect(close_shop_panel)
+		_sync_shop_input_lock()
 		_sync_hotbar_visibility()
 
 	if game_state != null and game_state.get_current_cash() == 0 and game_state.get_total_cash() == 0 and debug_gold_amount > 0:
@@ -134,13 +145,23 @@ func _resolve_inventory() -> Inventory:
 	if found_inventory != null:
 		return found_inventory
 
+	var game_state_node = get_node_or_null("/root/GameState")
+	if game_state_node != null:
+		var global_inv = game_state_node.get_node_or_null("GlobalInventory")
+		if global_inv is Inventory:
+			return global_inv
+
 	var mock_inventory: Inventory = Inventory.new()
-	mock_inventory.name = "Inventory"
+	mock_inventory.name = "GlobalInventory"
 	mock_inventory.hotbar_size = 10
 	mock_inventory.backpack_size = 30
 	mock_inventory.hotbar_slots.resize(mock_inventory.hotbar_size)
 	mock_inventory.backpack_slots.resize(mock_inventory.backpack_size)
-	add_child(mock_inventory)
+
+	if game_state_node != null:
+		game_state_node.add_child(mock_inventory)
+	else:
+		add_child(mock_inventory)
 	return mock_inventory
 
 
@@ -166,6 +187,16 @@ func _load_default_tools() -> Array[ToolData]:
 		if tool_data != null:
 			tools.append(tool_data)
 	return tools
+
+
+func _inventory_has_any_content(inv: Inventory) -> bool:
+	for index: int in range(inv.hotbar_slots.size()):
+		if inv.get_slot_stack(Inventory.SECTION_HOTBAR, index) != null:
+			return true
+	for index: int in range(inv.backpack_slots.size()):
+		if inv.get_slot_stack(Inventory.SECTION_BACKPACK, index) != null:
+			return true
+	return false
 
 
 func _seed_mock_backpack_if_needed() -> void:
@@ -286,6 +317,8 @@ func _sync_hotbar_visibility() -> void:
 		should_show_hotbar = false
 	if shop_panel != null and shop_panel.visible:
 		should_show_hotbar = false
+	if shop_buy_panel != null and shop_buy_panel.visible:
+		should_show_hotbar = false
 	hud.set_hotbar_visible(should_show_hotbar)
 
 
@@ -317,6 +350,55 @@ func close_shipping_panel() -> bool:
 
 func is_shipping_panel_open() -> bool:
 	return shop_panel != null and shop_panel.visible
+
+
+func open_shop_panel(shop_inventory: ShopInventory) -> void:
+	if shop_buy_panel == null:
+		return
+
+	visible = true
+	if inventory_panel != null:
+		inventory_panel.visible = false
+		_sync_inventory_input_lock()
+	if shop_panel != null:
+		shop_panel.visible = false
+		_sync_shipping_input_lock()
+
+	shop_buy_panel.setup(shop_inventory, inventory)
+	shop_buy_panel.visible = true
+	_sync_shop_input_lock()
+	_sync_hotbar_visibility()
+
+	if time_manager != null:
+		time_manager.pause_time(SHOP_INPUT_LOCK_REASON)
+
+
+func close_shop_panel() -> bool:
+	if shop_buy_panel == null:
+		return false
+	if not shop_buy_panel.visible:
+		return false
+
+	shop_buy_panel.visible = false
+	_sync_shop_input_lock()
+	_sync_hotbar_visibility()
+
+	if time_manager != null:
+		time_manager.resume_time(SHOP_INPUT_LOCK_REASON)
+
+	return true
+
+
+func is_shop_panel_open() -> bool:
+	return shop_buy_panel != null and shop_buy_panel.visible
+
+
+func _sync_shop_input_lock() -> void:
+	if shop_buy_panel != null and shop_buy_panel.visible:
+		SceneTransition.acquire_input_lock(SHOP_INPUT_LOCK_REASON)
+		return
+
+	SceneTransition.release_input_lock(SHOP_INPUT_LOCK_REASON)
 
 
 func _keycode_to_hotbar_index(keycode: Key) -> int:

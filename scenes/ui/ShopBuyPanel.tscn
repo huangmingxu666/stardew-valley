@@ -1,0 +1,139 @@
+[gd_scene format=3 uid="uid://cx6v38w10ab13"]
+
+[ext_resource type="Theme" uid="uid://22qpd6ligg50" path="res://resources/ui/ui_theme.tres" id="1_theme"]
+[ext_resource type="Texture2D" uid="uid://cbnoo6vyougor" path="res://assets/UI/Modern_UI_Style_1_32x32.png" id="2_ui_atlas"]
+[ext_resource type="Script" uid="uid://8aa5hkfsamv8" path="res://scripts/ui/ShopBuyPanel.gd" id="3_script"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bg"]
+atlas = ExtResource("2_ui_atlas")
+region = Rect2(16, 16, 64, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6moeo"]
+atlas = ExtResource("2_ui_atlas")
+region = Rect2(124, 206, 40, 10)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6moeo"]
+texture = SubResource("AtlasTexture_6moeo")
+texture_margin_left = 2.0
+texture_margin_top = 2.0
+texture_margin_right = 2.0
+texture_margin_bottom = 2.0
+region_rect = Rect2(0, 0, 40, 10)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xxnou"]
+texture = SubResource("AtlasTexture_6moeo")
+texture_margin_left = 2.0
+texture_margin_top = 2.0
+texture_margin_right = 2.0
+texture_margin_bottom = 2.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xxnou"]
+atlas = ExtResource("2_ui_atlas")
+region = Rect2(420, 742, 24, 22)
+
+[node name="ShopBuyPanel" type="Control" unique_id=2119576494]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -225.0
+offset_top = -175.0
+offset_right = 225.0
+offset_bottom = 175.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_theme")
+script = ExtResource("3_script")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="." unique_id=1325601234]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_bg")
+patch_margin_left = 16
+patch_margin_top = 14
+patch_margin_right = 14
+patch_margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="NinePatchRect" unique_id=961053493]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 22.0
+offset_top = 18.0
+offset_right = -22.0
+offset_bottom = -18.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 12
+
+[node name="Header" type="HBoxContainer" parent="NinePatchRect/VBoxContainer" unique_id=821451582]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="NinePatchRect/VBoxContainer/Header" unique_id=1563834767]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.247, 0.157, 0.078, 1)
+theme_override_font_sizes/font_size = 20
+text = "🏪 种子商店"
+
+[node name="Spacer" type="Control" parent="NinePatchRect/VBoxContainer/Header" unique_id=146845056]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CloseButton" type="Button" parent="NinePatchRect/VBoxContainer/Header" unique_id=526048909]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 14
+text = "X"
+
+[node name="HeaderSeparator" type="Panel" parent="NinePatchRect/VBoxContainer" unique_id=499921657]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_6moeo")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="NinePatchRect/VBoxContainer" unique_id=1027650782]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/scrollbar_h_separation = 16
+horizontal_scroll_mode = 0
+
+[node name="ItemContainer" type="VBoxContainer" parent="NinePatchRect/VBoxContainer/ScrollContainer" unique_id=342907480]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 8
+
+[node name="FooterSeparator" type="Panel" parent="NinePatchRect/VBoxContainer" unique_id=1366277757]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_xxnou")
+
+[node name="Footer" type="HBoxContainer" parent="NinePatchRect/VBoxContainer" unique_id=266385672]
+layout_mode = 2
+
+[node name="MessageLabel" type="Label" parent="NinePatchRect/VBoxContainer/Footer" unique_id=385101146]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.667, 0.133, 0.133, 1)
+theme_override_font_sizes/font_size = 14
+
+[node name="Spacer" type="Control" parent="NinePatchRect/VBoxContainer/Footer" unique_id=1644691492]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TextureRect" type="TextureRect" parent="NinePatchRect/VBoxContainer/Footer" unique_id=197076100]
+layout_mode = 2
+texture = SubResource("AtlasTexture_xxnou")
+
+[node name="CashLabel" type="Label" parent="NinePatchRect/VBoxContainer/Footer" unique_id=111264185]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.247, 0.157, 0.078, 1)
+theme_override_font_sizes/font_size = 16
+text = " 当前金币: "
+horizontal_alignment = 2

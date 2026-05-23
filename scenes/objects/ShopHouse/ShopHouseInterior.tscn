@@ -6,9 +6,121 @@
 [ext_resource type="Script" uid="uid://bbxqp350pvrs2" path="res://scripts/world/SceneSpawnController.gd" id="4_qupp7"]
 [ext_resource type="Script" uid="uid://bhiyx72nay5rp" path="res://scripts/objects/SceneExitArea.gd" id="5_vv0y3"]
 [ext_resource type="PackedScene" uid="uid://p18rs5sabde5" path="res://scenes/objects/ShopHouse/ShopCounter.tscn" id="6_pgc2r"]
+[ext_resource type="Script" uid="uid://g7w2bttkdxpj" path="res://scripts/economy/ShopInventory.gd" id="7_shopinv"]
+[ext_resource type="Resource" uid="uid://dm3fbo5jmfyk3" path="res://resources/items/Plant/Tomato/tomato_seed.tres" id="8_tomato_seed"]
+[ext_resource type="Resource" uid="uid://cx6v38w10ab11" path="res://resources/items/turnip_seed.tres" id="9_turnip_seed"]
+[ext_resource type="Resource" uid="uid://cx6v38w10ab12" path="res://resources/items/pumpkin_seed.tres" id="10_pumpkin_seed"]
+[ext_resource type="PackedScene" uid="uid://dbpwbl0pr5nns" path="res://scenes/ui/PlayerUi.tscn" id="11_playerui"]
+[ext_resource type="Resource" path="res://resources/items/carrot_seed.tres" id="12_carrot_seed"]
+[ext_resource type="Resource" path="res://resources/items/strawberry_seed.tres" id="13_strawberry_seed"]
+[ext_resource type="Resource" path="res://resources/items/chili_pepper_seed.tres" id="14_chili_pepper_seed"]
+[ext_resource type="Resource" path="res://resources/items/corn_seed.tres" id="15_corn_seed"]
+[ext_resource type="Resource" path="res://resources/items/onion_seed.tres" id="16_onion_seed"]
+[ext_resource type="Texture2D" uid="uid://dxy18ow4pqt0e" path="res://assets/Player/Player/Salesperson.png" id="17_722cy"]
+[ext_resource type="Texture2D" uid="uid://bla33ktwfvf5i" path="res://assets/Player/Player/Salesperson2.png" id="18_g0dh6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_leave"]
 size = Vector2(64, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g0dh6"]
+atlas = ExtResource("17_722cy")
+region = Rect2(0, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ajlm0"]
+atlas = ExtResource("17_722cy")
+region = Rect2(32, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_745p0"]
+atlas = ExtResource("17_722cy")
+region = Rect2(64, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2eat6"]
+atlas = ExtResource("17_722cy")
+region = Rect2(96, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r03st"]
+atlas = ExtResource("17_722cy")
+region = Rect2(128, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_buw2m"]
+atlas = ExtResource("17_722cy")
+region = Rect2(160, 0, 32, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_200a0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g0dh6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ajlm0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_745p0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2eat6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r03st")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_buw2m")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 10.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1nihs"]
+atlas = ExtResource("18_g0dh6")
+region = Rect2(384, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mb38j"]
+atlas = ExtResource("18_g0dh6")
+region = Rect2(416, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hj23s"]
+atlas = ExtResource("18_g0dh6")
+region = Rect2(448, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_657aq"]
+atlas = ExtResource("18_g0dh6")
+region = Rect2(480, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dxoln"]
+atlas = ExtResource("18_g0dh6")
+region = Rect2(512, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_her5k"]
+atlas = ExtResource("18_g0dh6")
+region = Rect2(544, 0, 32, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tosn4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1nihs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mb38j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hj23s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_657aq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dxoln")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_her5k")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 10.0
+}]
 
 [node name="ShopHouseInside" type="Node2D" unique_id=1671984944]
 y_sort_enabled = true
@@ -66,11 +178,34 @@ position = Vector2(352, 368)
 [node name="ShopCounter" parent="." unique_id=1826585299 instance=ExtResource("6_pgc2r")]
 position = Vector2(304, 368)
 scale = Vector2(1.6296937, -3.7610044)
-collision_layer = 4
-collision_mask = 0
+shop_inventory = NodePath("../ShopInventory")
 
 [node name="ShopCounter2" parent="." unique_id=515870415 instance=ExtResource("6_pgc2r")]
 position = Vector2(400, 368)
 scale = Vector2(1.6296937, -3.7610044)
-collision_layer = 4
-collision_mask = 0
+shop_inventory = NodePath("../ShopInventory")
+
+[node name="ShopInventory" type="Node" parent="." unique_id=1237900026]
+script = ExtResource("7_shopinv")
+shop_entries_config = Array[Resource]([ExtResource("8_tomato_seed"), ExtResource("9_turnip_seed"), ExtResource("10_pumpkin_seed"), ExtResource("12_carrot_seed"), ExtResource("13_strawberry_seed"), ExtResource("14_chili_pepper_seed"), ExtResource("15_corn_seed"), ExtResource("16_onion_seed")])
+
+[node name="Player_UI" parent="." unique_id=174535680 instance=ExtResource("11_playerui")]
+visible = false
+
+[node name="SalesPersonLeft" type="AnimatedSprite2D" parent="." unique_id=1342871778]
+z_index = 1
+y_sort_enabled = true
+position = Vector2(248, 348)
+sprite_frames = SubResource("SpriteFrames_200a0")
+animation = &"Idle"
+autoplay = "Idle"
+frame_progress = 0.91202235
+
+[node name="SalesPerson2" type="AnimatedSprite2D" parent="." unique_id=1528130926]
+z_index = 1
+y_sort_enabled = true
+position = Vector2(456, 348)
+sprite_frames = SubResource("SpriteFrames_tosn4")
+animation = &"Idle"
+autoplay = "Idle"
+frame_progress = 0.6707971

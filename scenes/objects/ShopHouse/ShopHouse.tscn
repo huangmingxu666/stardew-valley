@@ -15,7 +15,7 @@ texture = ExtResource("1_o5mxe")
 
 [node name="Door" parent="." unique_id=1672819996 instance=ExtResource("2_t201d")]
 position = Vector2(80, -32)
-destination_scene_path = "res://scenes/objects/ShopHouseInterior.tscn"
+destination_scene_path = "res://scenes/objects/ShopHouse/ShopHouseInterior.tscn"
 destination_spawn_marker = &"EnterMarker"
 record_current_scene_as_return = true
 

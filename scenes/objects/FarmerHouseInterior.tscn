@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://clv2hmtmkv4du" path="res://scenes/player/Player.tscn" id="3_lejw5"]
 [ext_resource type="Script" uid="uid://bbxqp350pvrs2" path="res://scripts/world/SceneSpawnController.gd" id="5_qpsik"]
 [ext_resource type="Script" uid="uid://bhiyx72nay5rp" path="res://scripts/objects/SceneExitArea.gd" id="6_k8n0r"]
+[ext_resource type="PackedScene" path="res://scenes/ui/PlayerUi.tscn" id="7_playerui"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_top"]
 size = Vector2(608, 40)
@@ -146,3 +147,6 @@ use_recorded_return_scene = true
 position = Vector2(191.83838, 421.9104)
 scale = Vector2(1.6646492, 2.4358356)
 shape = SubResource("RectangleShape2D_qpsik")
+
+[node name="Player_UI" parent="." unique_id=174535680 instance=ExtResource("7_playerui")]
+visible = false
