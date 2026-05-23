@@ -1,7 +1,7 @@
 [gd_resource type="TileSet" format=3 uid="uid://vercxq8b1om3"]
 
 [ext_resource type="PackedScene" uid="uid://c0splk453sbw8" path="res://scenes/objects/FarmerHouse.tscn" id="1_hb32t"]
-[ext_resource type="PackedScene" uid="uid://bficdpoh0s6l8" path="res://scenes/objects/ShopHouse.tscn" id="2_q0jcs"]
+[ext_resource type="PackedScene" uid="uid://bficdpoh0s6l8" path="res://scenes/objects/ShopHouse/ShopHouse.tscn" id="2_q0jcs"]
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_q0jcs"]
 resource_name = "Player_Home"

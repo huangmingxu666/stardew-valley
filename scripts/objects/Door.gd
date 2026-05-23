@@ -10,6 +10,7 @@ class_name Door
 @export var open_frame: int = 6
 @export var play_open_animation: bool = true
 @export var door_visible: bool = true
+@export var door_texture: Texture2D = null
 
 var _transitioning: bool = false
 
@@ -19,6 +20,9 @@ var _transitioning: bool = false
 func _ready() -> void:
 	if door_sprite == null:
 		return
+
+	if door_texture != null:
+		door_sprite.texture = door_texture
 
 	door_sprite.visible = door_visible
 	door_sprite.hframes = max(frame_count, 1)
@@ -41,6 +45,8 @@ func interact(_player: PlayerController) -> void:
 		var current_scene: Node = get_tree().current_scene
 		if current_scene != null:
 			SceneTransition.record_return_scene(current_scene.scene_file_path)
+		if _player != null:
+			SceneTransition.record_return_position(_player.global_position)
 
 	if play_open_animation and door_visible and door_sprite != null:
 		await _play_open_animation()

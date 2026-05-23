@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ectovj8t0y30"
-path="res://.godot/imported/ShopHouse_32x32.png-fbb7f674563421597cae38a1bc944daf.ctex"
+uid="uid://cm2feiahdq4rg"
+path="res://.godot/imported/animated_grocery_store_fridge_glass_both_32x32.png-83140d683a32ad35cafb21a8c2d3432c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Object/Building/ShopHouse/ShopHouse_32x32.png"
-dest_files=["res://.godot/imported/ShopHouse_32x32.png-fbb7f674563421597cae38a1bc944daf.ctex"]
+source_file="res://assets/Object/Building/Furniture/ShopHouse/animated_grocery_store_fridge_glass_both_32x32.png"
+dest_files=["res://.godot/imported/animated_grocery_store_fridge_glass_both_32x32.png-83140d683a32ad35cafb21a8c2d3432c.ctex"]
 
 [params]
 

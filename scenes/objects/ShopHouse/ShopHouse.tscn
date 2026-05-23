@@ -15,11 +15,16 @@ texture = ExtResource("1_o5mxe")
 
 [node name="Door" parent="." unique_id=1672819996 instance=ExtResource("2_t201d")]
 position = Vector2(80, -32)
+destination_scene_path = "res://scenes/objects/ShopHouseInterior.tscn"
+destination_spawn_marker = &"EnterMarker"
+record_current_scene_as_return = true
 
 [node name="DoorSprite" parent="Door" index="1" unique_id=1075404011]
 texture = ExtResource("3_601y6")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=297851131]
+collision_layer = 2
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1271223061]
 position = Vector2(0, -52)

@@ -87,6 +87,8 @@ spawn_markers_root_path = NodePath("../Markers")
 [node name="Boudary" type="Node2D" parent="." unique_id=1061623260]
 
 [node name="Boundaries" type="StaticBody2D" parent="Boudary" unique_id=1291923767]
+collision_layer = 2
+collision_mask = 0
 
 [node name="TopWall" type="CollisionShape2D" parent="Boudary/Boundaries" unique_id=1239205524]
 position = Vector2(304, 20)
@@ -134,7 +136,7 @@ position = Vector2(432, 386)
 shape = SubResource("RectangleShape2D_bottom_right")
 
 [node name="LeaveArea" type="Area2D" parent="Boudary" unique_id=1360912732]
-collision_layer = 0
+collision_layer = 8
 script = ExtResource("6_k8n0r")
 destination_scene_path = "res://scenes/world/Farm.tscn"
 destination_spawn_marker = &"HouseExteriorSpawn"

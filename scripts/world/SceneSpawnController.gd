@@ -11,9 +11,18 @@ func _ready() -> void:
 	if player == null:
 		return
 
-	var spawn_marker: Marker2D = _resolve_spawn_marker()
-	if spawn_marker != null:
-		player.global_position = spawn_marker.global_position
+	var use_memory: bool = false
+	var current_scene: Node = get_tree().current_scene
+	if current_scene != null and SceneTransition.has_recorded_return_position():
+		if current_scene.scene_file_path == SceneTransition.get_recorded_return_scene():
+			use_memory = true
+
+	if use_memory:
+		player.global_position = SceneTransition.consume_return_position()
+	else:
+		var spawn_marker: Marker2D = _resolve_spawn_marker()
+		if spawn_marker != null:
+			player.global_position = spawn_marker.global_position
 
 	SceneTransition.handle_player_spawn(player as PlayerController)
 

@@ -93,6 +93,17 @@ close={
 ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="Player"
+2d_physics/layer_2="Wall"
+2d_physics/layer_3="Interactable"
+2d_physics/layer_4="SceneTransition"
+2d_physics/layer_5="WorldItem"
+2d_physics/layer_6="NPC"
+2d_physics/layer_7="Animal"
+2d_physics/layer_8="Water"
+
 [physics]
 
 3d/physics_engine="Jolt Physics"

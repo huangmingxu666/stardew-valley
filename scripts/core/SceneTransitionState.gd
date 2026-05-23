@@ -9,6 +9,8 @@ var _scene_change_scheduled: bool = false
 var _input_locked_until_msec: int = 0
 var _manual_input_lock_reasons: Dictionary = {}
 var _recorded_return_scene_path: String = ""
+var _recorded_return_position: Vector2 = Vector2.ZERO
+var _has_recorded_return_position: bool = false
 
 
 func travel_to_scene(scene_path: String, spawn_marker: StringName = &"") -> void:
@@ -34,6 +36,22 @@ func record_return_scene(scene_path: String) -> void:
 
 func get_recorded_return_scene() -> String:
 	return _recorded_return_scene_path
+
+
+func record_return_position(pos: Vector2) -> void:
+	_recorded_return_position = pos
+	_has_recorded_return_position = true
+
+
+func consume_return_position() -> Vector2:
+	if _has_recorded_return_position:
+		_has_recorded_return_position = false
+		return _recorded_return_position
+	return Vector2.ZERO
+
+
+func has_recorded_return_position() -> bool:
+	return _has_recorded_return_position
 
 
 func lock_input_for_seconds(duration_seconds: float) -> void:

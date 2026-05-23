@@ -6,8 +6,11 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1is6s"]
 size = Vector2(69, 41.5)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gqhsn"]
+size = Vector2(69, 41.5)
+
 [node name="Bed" type="Area2D" unique_id=81296217]
-collision_layer = 2
+collision_layer = 4
 collision_mask = 0
 script = ExtResource("1_gqhsn")
 
@@ -19,3 +22,11 @@ flip_h = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=680163820]
 position = Vector2(0.5, -0.75)
 shape = SubResource("RectangleShape2D_1is6s")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=2007140477]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1648947435]
+position = Vector2(0.5, -0.75)
+shape = SubResource("RectangleShape2D_gqhsn")
